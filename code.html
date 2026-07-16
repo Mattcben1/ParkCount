@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0E1812">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ParkCount">
+<title>ParkCount — live field log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --ink:#0E1812; --surface:#162419; --surface-2:#1D2F22; --surface-3:#24392A;
+  --line:#2C4633; --line-soft:#1F3324; --text:#E9F0E7; --muted:#7FA084; --muted-dim:#587862;
+  --amber:#D9A441; --amber-dim:#8A6B2E; --rust:#C2693F; --moss:#6FA871; --sky:#5B94C2;
+  --r-sm:8px;--r-md:12px;--r-lg:18px;
+}
+body{background:var(--ink);color:var(--text);font-family:'Inter',-apple-system,sans-serif;min-height:100vh;font-size:15px}
+.mono{font-family:'JetBrains Mono',monospace}
+.hidden{display:none!important}
+.screen{display:none}
+.screen.active{display:block}
+button,select,input,textarea{font-family:inherit}
+
+/* ════ SETUP ════ */
+#setup.active{display:flex;min-height:100vh;align-items:center;justify-content:center;padding:30px 18px}
+.setup-shell{width:100%;max-width:480px}
+.brand{text-align:center;margin-bottom:22px}
+.brand-mark{width:48px;height:48px;margin:0 auto 12px}
+.brand-name{font-family:'Fraunces',serif;font-size:27px;font-weight:600;letter-spacing:-0.5px}
+.brand-tag{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.s-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px}
+.restore-banner{display:none;background:rgba(217,164,65,.1);border:1px solid var(--amber-dim);border-radius:var(--r-md);padding:13px 15px;margin-bottom:16px}
+.restore-banner.show{display:block}
+.restore-ttl{font-size:13px;font-weight:600;color:var(--amber);margin-bottom:3px}
+.restore-sub{font-size:11.5px;color:var(--muted);line-height:1.45;margin-bottom:11px}
+.restore-btns{display:flex;gap:8px}
+.restore-btns button{flex:1;border-radius:var(--r-sm);padding:9px;font-size:12.5px;font-weight:700;cursor:pointer;border:1px solid var(--line)}
+.rb-resume{background:var(--amber);color:#1A1206;border:none}
+.rb-dismiss{background:transparent;color:var(--muted)}
+.step-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--amber);margin-bottom:11px;display:flex;align-items:center;gap:8px}
+.step-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
+.field{margin-bottom:14px}
+.field-lbl{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:6px}
+.sel-wrap{position:relative}
+select,input[type=text]{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--text);padding:11px 14px;font-size:14.5px;outline:none;-webkit-appearance:none;appearance:none}
+select{padding-right:34px;cursor:pointer}
+select:focus,input:focus{border-color:var(--amber)}
+.sel-arrow{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:11px}
+.locate-btn{width:100%;background:transparent;border:1px dashed var(--amber-dim);border-radius:var(--r-sm);color:var(--amber);padding:11px;font-size:13.5px;font-weight:600;cursor:pointer;margin-bottom:7px;display:flex;align-items:center;justify-content:center;gap:7px}
+.locate-btn:disabled{opacity:.5}
+.status-ln{min-height:18px;font-size:12px;text-align:center;color:var(--muted-dim);margin-bottom:6px}
+.status-ln.ok{color:var(--moss)}
+.status-ln.err{color:var(--rust)}
+.wx-prev{display:none;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 6px;margin:9px 0 4px}
+.wx-prev.show{display:grid}
+.wx-chip{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 0}
+.wx-v{font-size:12.5px;font-weight:600}
+.wx-l{font-size:8.5px;color:var(--muted-dim);text-transform:uppercase;letter-spacing:.5px}
+
+.divider{height:1px;background:var(--line);margin:18px 0}
+
+.file-opt-row{display:flex;gap:8px;margin-bottom:10px}
+.file-opt{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--text);padding:13px 8px;font-size:12.5px;font-weight:600;cursor:pointer;text-align:center;line-height:1.35}
+.file-opt:disabled{opacity:.35;cursor:not-allowed}
+.file-opt:not(:disabled):hover{border-color:var(--amber-dim)}
+.file-opt.chosen{border-color:var(--amber);background:rgba(217,164,65,.12)}
+.file-opt small{display:block;font-weight:400;color:var(--muted-dim);margin-top:3px;font-size:10.5px}
+.fs-note{font-size:11.5px;color:var(--muted-dim);line-height:1.5;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px 13px;margin-bottom:14px}
+.fs-note code{background:var(--surface-3);padding:1px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.gate-note{font-size:11px;color:var(--muted-dim);text-align:center;margin-bottom:10px}
+.live-confirm{display:none;align-items:center;gap:8px;background:rgba(111,168,113,.1);border:1px solid var(--moss);border-radius:var(--r-sm);padding:10px 13px;margin-bottom:14px;font-size:12px;color:var(--moss);line-height:1.4}
+.live-confirm.show{display:flex}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.dot-live{background:var(--moss)}
+.dot-off{background:var(--rust)}
+
+.start-btn{width:100%;background:var(--amber);border:none;border-radius:var(--r-sm);color:#1A1206;padding:14px;font-size:14.5px;font-weight:700;cursor:pointer;letter-spacing:.2px}
+.start-btn:disabled{opacity:.3}
+
+/* ════ DASHBOARD ════ */
+#dash.active{display:block}
+.dash-wrap{max-width:1140px;margin:0 auto;padding:0 20px 84px}
+
+.d-header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 14px;flex-wrap:wrap;gap:10px}
+.d-id{display:flex;align-items:center;gap:12px}
+.d-mark{width:32px;height:32px;flex-shrink:0}
+.d-park{font-family:'Fraunces',serif;font-size:18px;font-weight:600}
+.d-loc{font-size:10.5px;color:var(--muted-dim);font-family:'JetBrains Mono',monospace;margin-top:1px}
+.d-clock{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:600;color:var(--amber);text-align:right}
+.d-date{font-size:10.5px;color:var(--muted-dim);text-align:right;margin-top:1px}
+
+.wx-strip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:11px 16px;display:flex;align-items:center;gap:18px;overflow-x:auto;margin-bottom:16px}
+.wx-i{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.wx-i-v{font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace}
+.wx-asof{margin-left:auto;font-size:10.5px;color:var(--muted-dim);font-family:'JetBrains Mono',monospace;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.wx-auto{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted-dim);font-family:'JetBrains Mono',monospace;white-space:nowrap;flex-shrink:0}
+.wx-auto .pulse{width:6px;height:6px;border-radius:50%;background:var(--moss);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:13px 14px 11px}
+.stat-v{font-family:'Fraunces',serif;font-size:27px;font-weight:600;line-height:1}
+.stat-l{font-size:10px;color:var(--muted-dim);text-transform:uppercase;letter-spacing:.8px;margin-top:5px}
+.stat-sub{font-size:9.5px;color:var(--muted-dim);margin-top:2px}
+
+.main-grid{display:grid;grid-template-columns:0.82fr 1.18fr;gap:14px;align-items:start}
+.col{display:flex;flex-direction:column;gap:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
+.panel-ttl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted);margin-bottom:13px;display:flex;align-items:center;gap:8px}
+.panel-ttl::after{content:'';flex:1;height:1px;background:var(--line)}
+
+.ring-wrap{display:flex;flex-direction:column;align-items:center;padding:2px 0}
+.ring-cap{font-size:10.5px;color:var(--muted-dim);margin-top:8px;text-align:center}
+
+.bar-row{margin-bottom:10px}
+.bar-row:last-child{margin-bottom:0}
+.bar-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.bar-n{font-family:'JetBrains Mono',monospace;color:var(--muted)}
+.bar-track{height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;background:var(--amber);border-radius:3px;width:0%;transition:width .35s ease}
+.empty-note{color:var(--muted-dim);font-size:12.5px;text-align:center;padding:24px 0}
+
+.qlog-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:13px}
+.qlog-lbl{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);width:78px;flex-shrink:0;padding-top:8px}
+.chip-wrap{display:flex;flex-wrap:wrap;gap:6px;flex:1}
+.chip{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;color:var(--muted);padding:7px 11px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.chip.active{border-color:var(--amber);background:rgba(217,164,65,.14);color:var(--text)}
+.chip.pass-none.active{border-color:var(--muted);background:rgba(127,160,132,.14);color:var(--muted)}
+.chip.pass-tag.active{border-color:var(--moss);background:rgba(111,168,113,.16);color:var(--moss)}
+.ctr-mini{display:flex;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;overflow:hidden;flex-shrink:0}
+.ctr-mini button{background:none;border:none;color:var(--text);font-size:18px;width:32px;height:32px;cursor:pointer}
+.ctr-mini button:disabled{color:var(--muted-dim)}
+.ctr-mini span{width:30px;text-align:center;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px}
+.ctr-lbl{font-size:9px;color:var(--muted-dim);text-transform:uppercase;letter-spacing:.6px;text-align:center;margin-top:3px}
+.ctr-block{display:flex;flex-direction:column;align-items:center}
+textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--text);padding:10px 12px;font-size:13.5px;resize:none;outline:none;height:40px;margin-bottom:14px}
+textarea:focus{border-color:var(--amber)}
+.log-btn{width:100%;background:var(--amber);border:none;border-radius:var(--r-md);color:#1A1206;padding:14px;font-size:14.5px;font-weight:700;cursor:pointer;letter-spacing:.3px}
+.log-btn:disabled{opacity:.28}
+.log-btn.flash{background:var(--moss)!important}
+.kbd-hint{font-size:10.5px;color:var(--muted-dim);text-align:center;margin-top:8px}
+.kbd-hint kbd{background:var(--surface-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-family:'JetBrains Mono',monospace}
+
+.entries-list{max-height:250px;overflow-y:auto}
+.e-row{display:grid;grid-template-columns:46px 52px 62px 1fr;gap:9px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:12px}
+.e-row:last-child{border-bottom:none}
+.e-t{font-family:'JetBrains Mono',monospace;color:var(--amber);font-size:11px}
+.e-p{background:var(--surface-2);border-radius:5px;text-align:center;padding:2px 0;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11px}
+.e-ret{color:var(--rust);margin-left:3px}
+.e-vt{color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.e-d{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.e-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.dot-yes{background:var(--moss)}.dot-no{background:var(--rust)}.dot-unk{background:var(--muted-dim)}
+
+.d-footer{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);padding:11px 20px;display:flex;align-items:center;justify-content:space-between;z-index:50;flex-wrap:wrap;gap:8px}
+.foot-l{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.foot-cnt{font-size:12px;color:var(--muted)}
+.foot-cnt strong{color:var(--amber);font-family:'JetBrains Mono',monospace}
+.foot-live{display:flex;align-items:center;gap:6px;font-size:11.5px;font-family:'JetBrains Mono',monospace}
+.foot-live.ok{color:var(--moss)}
+.foot-live.off{color:var(--rust)}
+.foot-btn{background:var(--amber);border:none;border-radius:8px;color:#1A1206;padding:9px 16px;font-size:12.5px;font-weight:700;cursor:pointer}
+
+@media(max-width:880px){
+  .main-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ SETUP ════ -->
+<div id="setup" class="screen active">
+  <div class="setup-shell">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="7.5" stroke="#D9A441" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="15" stroke="#587862" stroke-width="1.2"/>
+        <circle cx="24" cy="24" r="22" stroke="#2C4633" stroke-width="1"/>
+      </svg>
+      <div class="brand-name">ParkCount</div>
+      <div class="brand-tag">Live field log</div>
+    </div>
+
+    <div class="s-card">
+      <div class="restore-banner" id="restore-banner">
+        <div class="restore-ttl">Unsaved session found</div>
+        <div class="restore-sub" id="restore-sub">—</div>
+        <div class="restore-btns">
+          <button class="rb-resume" onclick="restoreSession()">Resume →</button>
+          <button class="rb-dismiss" onclick="dismissRestore()">Start fresh</button>
+        </div>
+      </div>
+
+      <div class="step-lbl">Step 1 — session</div>
+      <div class="field">
+        <label class="field-lbl" for="park-sel">Park</label>
+        <div class="sel-wrap">
+          <select id="park-sel" onchange="onParkChange()">
+            <option value="">Select a park…</option>
+          </select>
+          <span class="sel-arrow">▾</span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-lbl" for="init-inp">Your initials</label>
+        <input id="init-inp" type="text" maxlength="4" placeholder="e.g. MB" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      </div>
+      <button class="locate-btn" id="locate-btn" onclick="detectLocation()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        Suggest my park from device location (optional)
+      </button>
+      <div class="status-ln" id="status-ln">Optional — weather always loads from your selected park's known coordinates, not your device</div>
+      <div class="wx-prev" id="wx-prev">
+        <div class="wx-chip"><span class="wx-v" id="p-sky">—</span><span class="wx-l">Sky</span></div>
+        <div class="wx-chip"><span class="wx-v" id="p-temp">—</span><span class="wx-l">Temp °F</span></div>
+        <div class="wx-chip"><span class="wx-v" id="p-pr">—</span><span class="wx-l">Precip</span></div>
+        <div class="wx-chip"><span class="wx-v" id="p-cloud">—</span><span class="wx-l">Cloud %</span></div>
+        <div class="wx-chip"><span class="wx-v" id="p-wind">—</span><span class="wx-l">Wind</span></div>
+        <div class="wx-chip"><span class="wx-v" id="p-hum">—</span><span class="wx-l">Humidity</span></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="step-lbl">Step 2 — live file (optional)</div>
+      <div class="gate-note" id="gate-note">Select a park above to enable file options</div>
+      <div id="fs-supported-block">
+        <div class="file-opt-row">
+          <button class="file-opt" id="opt-new" disabled onclick="chooseNewFile()">📄 Start new file<small id="opt-new-sub">this park, this weekend</small></button>
+          <button class="file-opt" id="opt-import" disabled onclick="importAndContinue()">📥 Import &amp; continue<small>your Excel CSV or a saved log</small></button>
+        </div>
+        <div class="live-confirm" id="live-confirm"><span class="dot dot-live"></span><span id="live-confirm-txt">Connected</span></div>
+        <div class="gate-note" style="margin-top:2px">Auto-backup runs either way — this just writes a CSV live as you go.</div>
+      </div>
+      <div id="fs-unsupported-block" class="hidden">
+        <div class="fs-note">
+          Live CSV writing isn't available when the page is opened directly from a file. That's fine — your entries auto-save inside the browser as you log them, and you can tap <strong>Export CSV backup</strong> anytime. (For live writing to a CSV, open the hosted link instead.)
+        </div>
+        <button class="file-opt" style="width:100%;margin-bottom:14px" onclick="skipLiveFile()">⏭ Continue without live file</button>
+      </div>
+
+      <button class="start-btn" id="start-btn" disabled onclick="startSession()">Open dashboard →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ DASHBOARD ════ -->
+<div id="dash" class="screen">
+  <div class="dash-wrap">
+
+    <div class="d-header">
+      <div class="d-id">
+        <svg class="d-mark" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="5" stroke="#D9A441" stroke-width="1.4"/>
+          <circle cx="16" cy="16" r="10" stroke="#587862" stroke-width="1.1"/>
+          <circle cx="16" cy="16" r="14.5" stroke="#2C4633" stroke-width="0.9"/>
+        </svg>
+        <div>
+          <div class="d-park" id="h-park">—</div>
+          <div class="d-loc mono" id="h-loc">lat —, lon —</div>
+        </div>
+      </div>
+      <div>
+        <div class="d-clock" id="h-time">—</div>
+        <div class="d-date" id="h-date">—</div>
+      </div>
+    </div>
+
+    <div class="wx-strip">
+      <div class="wx-i"><span class="wx-i-v" id="e-sky">—</span></div>
+      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D9A441" stroke-width="1.8"><path d="M14 4a2 2 0 0 0-4 0v9.3a4.5 4.5 0 1 0 4 0V4Z"/></svg><span class="wx-i-v" id="e-temp">—</span></div>
+      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M12 3c3 4 6 7.2 6 10.5a6 6 0 0 1-12 0C6 10.2 9 7 12 3Z"/></svg><span class="wx-i-v" id="e-pr">—</span></div>
+      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><circle cx="9" cy="14" r="4"/><circle cx="15" cy="11" r="5"/></svg><span class="wx-i-v" id="e-cloud">—</span></div>
+      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M3 8h11a2.5 2.5 0 1 0-2.5-2.5M3 16h15a2.5 2.5 0 1 1-2.5 2.5M3 12h8"/></svg><span class="wx-i-v" id="e-wind">—</span></div>
+      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M12 16a4 4 0 0 0 4-4c0-2-2-3-2-5a2 2 0 0 0-4 0c0 2-2 3-2 5a4 4 0 0 0 4 4Z"/></svg><span class="wx-i-v" id="e-hum">—</span></div>
+      <span class="wx-asof mono" id="wx-asof"></span>
+      <div class="wx-auto" id="wx-auto"><span class="pulse"></span><span>auto 15–25 min</span></div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-v mono" id="st-cars">0</div><div class="stat-l">Vehicles</div></div>
+      <div class="stat-card"><div class="stat-v mono" id="st-new">0</div><div class="stat-l">New visitors</div><div class="stat-sub" id="st-new-sub">0 total · 0 returning</div></div>
+      <div class="stat-card"><div class="stat-v mono" id="st-avg">0.0</div><div class="stat-l">Multiplier</div><div class="stat-sub">new visitors / vehicle</div></div>
+      <div class="stat-card"><div class="stat-v mono" id="st-pass">0%</div><div class="stat-l">Pass rate</div><div class="stat-sub">vehicles with a pass</div></div>
+    </div>
+
+    <div class="main-grid">
+      <div class="col">
+        <div class="panel">
+          <div class="panel-ttl">Today's count</div>
+          <div class="ring-wrap">
+            <svg width="160" height="160" viewBox="0 0 160 160" id="ring-svg"></svg>
+            <div class="ring-cap">each contour ≈ 5 vehicles</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-ttl">Primary activity</div>
+          <div id="act-bars"><div class="empty-note">No entries yet</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-ttl">Passes presented</div>
+          <div id="pass-bars"><div class="empty-note">No entries yet</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-ttl">Recent entries</div>
+          <div class="entries-list" id="entries-list"><div class="empty-note">Logged vehicles appear here</div></div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="panel">
+          <div class="panel-ttl">Log a vehicle</div>
+
+          <div class="qlog-row">
+            <span class="qlog-lbl">Vehicle</span>
+            <div class="chip-wrap" id="vtype-wrap">
+              <button class="chip" data-v="Car/SUV" onclick="selVtype(this)">Car/SUV</button>
+              <button class="chip" data-v="Truck" onclick="selVtype(this)">Truck</button>
+              <button class="chip" data-v="Motorcycle" onclick="selVtype(this)">Motorcycle</button>
+              <button class="chip" data-v="RV/Camper" onclick="selVtype(this)">RV/Camper</button>
+              <button class="chip" data-v="Boat Trailer" onclick="selVtype(this)">Boat Trailer</button>
+              <button class="chip" data-v="Bus/Van" onclick="selVtype(this)">Bus/Van</button>
+              <button class="chip" data-v="Other" onclick="selVtype(this)">Other</button>
+            </div>
+          </div>
+
+          <div class="qlog-row">
+            <span class="qlog-lbl">People</span>
+            <div class="ctr-block">
+              <div class="ctr-mini">
+                <button id="minus-btn" onclick="adjPeople(-1)" disabled>−</button>
+                <span id="ppl-val">1</span>
+                <button onclick="adjPeople(1)">+</button>
+              </div>
+              <div class="ctr-lbl">in vehicle</div>
+            </div>
+            <div class="ctr-block">
+              <div class="ctr-mini">
+                <button id="ret-minus" onclick="adjReturn(-1)" disabled>−</button>
+                <span id="ret-val">0</span>
+                <button id="ret-plus" onclick="adjReturn(1)" disabled>+</button>
+              </div>
+              <div class="ctr-lbl">returning</div>
+            </div>
+          </div>
+
+          <div class="qlog-row">
+            <span class="qlog-lbl">Passes</span>
+            <div class="chip-wrap" id="pass-wrap">
+              <button class="chip pass-none" data-v="None" onclick="selPass(this)">None</button>
+              <button class="chip pass-tag" data-v="Day Pass" onclick="selPass(this)">Day Pass</button>
+              <button class="chip pass-tag" data-v="Camping" onclick="selPass(this)">Camping</button>
+              <button class="chip pass-tag" data-v="Annual" onclick="selPass(this)">Annual</button>
+              <button class="chip pass-tag" data-v="Life" onclick="selPass(this)">Life</button>
+              <button class="chip pass-tag" data-v="Veteran" onclick="selPass(this)">Veteran</button>
+              <button class="chip pass-tag" data-v="Handicap" onclick="selPass(this)">Handicap</button>
+              <button class="chip pass-tag" data-v="Entry Coupon" onclick="selPass(this)">Entry Coupon</button>
+            </div>
+          </div>
+
+          <div class="qlog-row">
+            <span class="qlog-lbl">Activity</span>
+            <div class="chip-wrap" id="act-wrap">
+              <button class="chip" data-v="Day Visit" onclick="selAct(this)">Day Visit</button>
+              <button class="chip" data-v="Swimming" onclick="selAct(this)">Swimming</button>
+              <button class="chip" data-v="Hiking" onclick="selAct(this)">Hiking</button>
+              <button class="chip" data-v="Fishing" onclick="selAct(this)">Fishing</button>
+              <button class="chip" data-v="Boating/Paddling" onclick="selAct(this)">Boating</button>
+              <button class="chip" data-v="Camping" onclick="selAct(this)">Camping</button>
+              <button class="chip" data-v="Cabin/Lodge" onclick="selAct(this)">Cabin/Lodge</button>
+              <button class="chip" data-v="Picnicking" onclick="selAct(this)">Picnicking</button>
+              <button class="chip" data-v="Biking" onclick="selAct(this)">Biking</button>
+              <button class="chip" data-v="Wildlife/Birding" onclick="selAct(this)">Wildlife</button>
+              <button class="chip" data-v="Horseback" onclick="selAct(this)">Horseback</button>
+              <button class="chip" data-v="Event/Program" onclick="selAct(this)">Event</button>
+              <button class="chip" data-v="Other" onclick="selAct(this)">Other</button>
+            </div>
+          </div>
+
+          <textarea id="notes" placeholder="Notes (optional) — contractor, large group, pass #…"></textarea>
+          <button class="log-btn" id="log-btn" disabled onclick="logEntry()">Log this vehicle →</button>
+          <div class="kbd-hint">press <kbd>Enter</kbd> to log · number keys <kbd>1</kbd>–<kbd>9</kbd> set people</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="d-footer">
+    <div class="foot-l">
+      <div class="foot-cnt"><strong id="ft-n">0</strong> logged · <strong id="ft-p">0</strong> new visitors · <strong id="ft-r">0</strong> returning</div>
+      <div class="foot-live off" id="foot-live"><span class="dot dot-off"></span><span id="foot-live-txt">no live file</span></div>
+    </div>
+    <button class="foot-btn" onclick="exportCSV()">Export CSV backup</button>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   Virginia State Parks — full system roster (44 official parks +
+   2 administered properties). Coordinates are park-level, used only
+   to pull weather from Open-Meteo for the selected park.
+   Note: Belle Isle here is Belle Isle STATE PARK (Lancaster Co.),
+   corrected from the old build which used Richmond's Belle Isle.
+   ══════════════════════════════════════════════════════════════ */
+const PARKS={
+  'Bear Creek Lake':{lat:37.5289,lon:-78.2733},
+  'Belle Isle':{lat:37.7649,lon:-76.5906},
+  'Breaks Interstate':{lat:37.2942,lon:-82.2916},
+  'Caledon':{lat:38.3418,lon:-77.0765},
+  'Chippokes':{lat:37.1443,lon:-76.7360},
+  'Claytor Lake':{lat:37.0560,lon:-80.6260},
+  'Clinch River':{lat:36.9040,lon:-82.3130},
+  'Culpeper Battlefields':{lat:38.4730,lon:-77.9060},
+  'Douthat':{lat:37.9043,lon:-79.8055},
+  'Fairy Stone':{lat:36.7830,lon:-80.1030},
+  'Falling Spring Falls':{lat:37.8770,lon:-79.9420},
+  'False Cape':{lat:36.7396,lon:-75.9569},
+  'First Landing':{lat:36.9004,lon:-76.0100},
+  'Grayson Highlands':{lat:36.6384,lon:-81.4960},
+  'Green Pastures':{lat:37.7940,lon:-79.9130},
+  'Hayfields':{lat:38.3600,lon:-79.5700},
+  'High Bridge Trail':{lat:37.3010,lon:-78.3960},
+  'Holliday Lake':{lat:37.3970,lon:-78.6390},
+  'Hungry Mother':{lat:36.8915,lon:-81.5365},
+  'James River':{lat:37.6180,lon:-78.7860},
+  'Kiptopeke':{lat:37.1680,lon:-75.9912},
+  'Lake Anna':{lat:38.0982,lon:-77.7975},
+  'Leesylvania':{lat:38.5659,lon:-77.2053},
+  'Machicomoco':{lat:37.3820,lon:-76.4870},
+  'Mason Neck':{lat:38.6319,lon:-77.1653},
+  'Natural Bridge':{lat:37.6282,lon:-79.5431},
+  'Natural Tunnel':{lat:36.7040,lon:-82.7460},
+  'New River Trail':{lat:36.8790,lon:-80.8730},
+  'Occoneechee':{lat:36.6360,lon:-78.5230},
+  'Pocahontas':{lat:37.3837,lon:-77.5886},
+  'Powhatan':{lat:37.6870,lon:-77.9560},
+  "Sailor's Creek Battlefield":{lat:37.3320,lon:-78.2350},
+  'Seven Bends':{lat:38.8890,lon:-78.5200},
+  'Shenandoah River (Andy Guest)':{lat:38.9279,lon:-78.3228},
+  'Shot Tower':{lat:36.8720,lon:-80.9640},
+  'Sky Meadows':{lat:38.9880,lon:-77.9700},
+  'Smith Mountain Lake':{lat:37.0326,lon:-79.6646},
+  'Southwest Virginia Museum':{lat:36.8690,lon:-82.7800},
+  'Staunton River':{lat:36.6930,lon:-78.6690},
+  'Staunton River Battlefield':{lat:36.9930,lon:-78.7020},
+  'Sweet Run':{lat:39.2560,lon:-77.6180},
+  'Twin Lakes':{lat:37.1750,lon:-78.2700},
+  'Westmoreland':{lat:38.1584,lon:-76.8641},
+  'Widewater':{lat:38.4230,lon:-77.3860},
+  'Wilderness Road':{lat:36.6270,lon:-83.4470},
+  'York River':{lat:37.3974,lon:-76.5861}
+};
+
+const ACT_ORDER=['Day Visit','Swimming','Hiking','Fishing','Boating/Paddling','Camping','Cabin/Lodge','Picnicking','Biking','Wildlife/Birding','Horseback','Event/Program','Other'];
+const PASS_ORDER=['Day Pass','Camping','Annual','Life','Veteran','Handicap','Entry Coupon'];
+const CSV_HEADER=['Entry #','Date','Time','Park','Observer (initials)','Vehicle Type','People in Vehicle','Returning Campers','Net New People','Passes','Primary Activity','Sky','Precipitation','Temp (°F)','Humidity (%)','Cloud Cover (%)','Wind','Notes'];
+const FS_SUPPORTED=('showSaveFilePicker' in window)&&window.isSecureContext;
+
+let sess={park:'',initials:'',lat:null,lon:null,accuracy:null,locSource:null,wx:null,wxAt:null,fileHandle:null,liveMode:false};
+let entries=[],curPpl=1,curReturn=0,curPasses=[],curAct=null,curVtype=null;
+let totalPpl=0,totalReturn=0;
+let wxTimer=null;
+
+/* ══ autosave: crash-recovery backup so double-click / offline use never loses data ══
+   Independent of the live CSV file — this is a safety net kept in the browser itself. */
+const STORAGE_KEY='parkcount_autosave_v1';
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      park:sess.park, initials:sess.initials, lat:sess.lat, lon:sess.lon,
+      entries, totalPpl, totalReturn, savedAt:Date.now()
+    }));
+  }catch(e){ /* private mode / file:// quirks — non-fatal */ }
+}
+function loadState(){
+  try{ const raw=localStorage.getItem(STORAGE_KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; }
+}
+function clearState(){ try{ localStorage.removeItem(STORAGE_KEY); }catch(e){} }
+function maybeShowRestore(){
+  const s=loadState();
+  if(!s||!s.entries||!s.entries.length) return;
+  const when=new Date(s.savedAt);
+  const ago=Math.round((Date.now()-s.savedAt)/60000);
+  const agoTxt = ago<1?'just now':ago<60?ago+' min ago':Math.floor(ago/60)+'h ago';
+  document.getElementById('restore-sub').textContent=
+    `${s.park||'Unknown park'} · ${s.entries.length} vehicle${s.entries.length===1?'':'s'} · last saved ${agoTxt} (${when.toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}). Resume to keep logging into the same tally.`;
+  document.getElementById('restore-banner').classList.add('show');
+}
+function dismissRestore(){
+  clearState();
+  document.getElementById('restore-banner').classList.remove('show');
+}
+function restoreSession(){
+  const s=loadState();
+  if(!s){ dismissRestore(); return; }
+  sess.park=s.park; sess.initials=s.initials||'—'; sess.lat=s.lat; sess.lon=s.lon; sess.locSource='park';
+  entries=s.entries||[]; totalPpl=s.totalPpl||0; totalReturn=s.totalReturn||0;
+  document.getElementById('restore-banner').classList.remove('show');
+  document.getElementById('h-park').textContent=(sess.park||'Park')+' State Park';
+  document.getElementById('h-loc').textContent=sess.lat?`${sess.lat.toFixed(4)}, ${sess.lon.toFixed(4)} (fixed park coordinates)`:'—';
+  document.getElementById('setup').classList.remove('active');
+  document.getElementById('dash').classList.add('active');
+  updateClock(); setInterval(updateClock,1000);
+  refreshWeather();                    /* re-pull fresh weather for the park */
+  scheduleWxRefresh();
+  resetForm();
+  updateStats(); drawRing(); renderActBars(); renderPassBars(); renderEntries();
+  sess.liveMode=false; updateLiveBadge(); updateFooter();
+}
+
+/* ── populate park dropdown from roster (alphabetical) ── */
+(function fillParks(){
+  const sel=document.getElementById('park-sel');
+  Object.keys(PARKS).forEach(name=>{
+    const o=document.createElement('option'); o.textContent=name; sel.appendChild(o);
+  });
+})();
+
+/* ── weather/location helpers ── */
+function mapWMO(code,precipAmt){
+  let sky='Clear',precip='None';
+  if(code===0) sky='Clear';
+  else if(code<=2) sky='Partly Cloudy';
+  else if(code===3) sky='Overcast';
+  else if(code<=48){sky='Overcast';precip='Fog';}
+  else sky='Cloudy';
+  if((code>=51&&code<=57)||code===61||code===66) precip='Light Rain';
+  else if(code===63||code===65||code===67) precip='Rain';
+  else if(code===82||code===99) precip='Heavy Rain';
+  else if((code>=80&&code<=81)||(code>=95&&code<=98)) precip='Rain';
+  else if((code>=71&&code<=77)||code===85||code===86) precip='Snow';
+  if(precipAmt<=0&&!['Fog','None'].includes(precip)) precip='None';
+  return{sky,precip};
+}
+function degToCompass(deg){
+  const dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  return dirs[Math.round(deg/22.5)%16];
+}
+function haversine(la1,lo1,la2,lo2){
+  const R=3959,dLa=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180;
+  const a=Math.sin(dLa/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+function nearestPark(lat,lon){
+  let best=null,bestD=Infinity;
+  for(const[n,c] of Object.entries(PARKS)){
+    const d=haversine(lat,lon,c.lat,c.lon);
+    if(d<bestD){bestD=d;best=n;}
+  }
+  return best;
+}
+async function fetchWx(lat,lon){
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m&temperature_unit=fahrenheit&precipitation_unit=inch&wind_speed_unit=mph`;
+  const r=await fetch(url);
+  if(!r.ok) throw new Error('API error');
+  const d=await r.json();
+  const c=d.current;
+  const{sky,precip}=mapWMO(c.weather_code,c.precipitation);
+  return{
+    temp:Math.round(c.temperature_2m),
+    humidity:Math.round(c.relative_humidity_2m),
+    sky,precip,
+    cloud:Math.round(c.cloud_cover),
+    wind:`${Math.round(c.wind_speed_10m)} mph ${degToCompass(c.wind_direction_10m)}`
+  };
+}
+function setStatus(msg,cls){
+  const el=document.getElementById('status-ln');
+  el.textContent=msg; el.className='status-ln '+(cls||'');
+}
+
+/* ── weekend label: Thu through Sun block containing "date" ── */
+function getWeekendLabel(date){
+  const d=new Date(date);
+  const day=d.getDay();
+  const diff=(day-4+7)%7;
+  const thu=new Date(d); thu.setDate(d.getDate()-diff);
+  const sun=new Date(thu); sun.setDate(thu.getDate()+3);
+  const fmt=x=>String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+  return `${fmt(thu)}_to_${fmt(sun)}`;
+}
+
+function onParkChange(){
+  const sel=document.getElementById('park-sel');
+  const has=!!sel.value;
+  document.getElementById('opt-new').disabled=!has;
+  document.getElementById('opt-import').disabled=!has;
+  document.getElementById('gate-note').classList.toggle('hidden',has);
+  if(has){
+    const p=sel.value;
+    document.getElementById('opt-new-sub').textContent=`${p}, ${getWeekendLabel(new Date())}`;
+    /* weather always comes from the park's own fixed, known coordinates — never the laptop's GPS/WiFi guess */
+    const coords=PARKS[p];
+    if(coords){
+      sess.lat=coords.lat; sess.lon=coords.lon; sess.locSource='park';
+      loadWeatherPreview(`Fetching weather for ${p}…`, `Weather locked in for ${p}`);
+    }
+  }
+  checkStartReady();
+}
+const PARK_MATCH_ACCURACY_LIMIT_M=8000; /* don't trust the GPS guess for park selection beyond ~8km accuracy */
+
+async function loadWeatherPreview(loadingMsg,okMsg){
+  setStatus(loadingMsg);
+  try{
+    const wx=await fetchWx(sess.lat,sess.lon);
+    sess.wx=wx;
+    document.getElementById('p-sky').textContent=wx.sky;
+    document.getElementById('p-temp').textContent=wx.temp+'°';
+    document.getElementById('p-pr').textContent=wx.precip;
+    document.getElementById('p-cloud').textContent=wx.cloud+'%';
+    document.getElementById('p-wind').textContent=wx.wind;
+    document.getElementById('p-hum').textContent=wx.humidity+'%';
+    document.getElementById('wx-prev').classList.add('show');
+    setStatus(okMsg,'ok');
+  }catch(e){ setStatus('Weather fetch failed — check connection','err'); }
+}
+
+async function detectLocation(){
+  if(!navigator.geolocation){setStatus('GPS not available on this device','err');return;}
+  const btn=document.getElementById('locate-btn');
+  btn.disabled=true;
+  setStatus('Checking your device location to suggest a park…');
+  navigator.geolocation.getCurrentPosition((pos)=>{
+    const devAccuracy=Math.round(pos.coords.accuracy);
+    if(devAccuracy<=PARK_MATCH_ACCURACY_LIMIT_M){
+      const near=nearestPark(pos.coords.latitude,pos.coords.longitude);
+      if(near){
+        document.getElementById('park-sel').value=near;
+        onParkChange(); /* this sets sess.lat/lon to the PARK's fixed coords and loads weather — never the raw device fix */
+        setStatus(`Device location matched to ${near} (±${devAccuracy}m) — using ${near}'s known coordinates for weather`,'ok');
+      }
+    }else{
+      setStatus(`Device location too coarse (±${devAccuracy}m) to guess your park — please select it manually below`,'err');
+    }
+    btn.disabled=false;
+  },()=>{ setStatus('Location denied — no problem, just select your park manually below','err'); btn.disabled=false; },
+  {enableHighAccuracy:true,timeout:12000});
+}
+
+
+/* ── universal CSV parser: handles our own writer AND Excel-exported official template ── */
+function parseCsv(text){
+  text=text.replace(/^﻿/,'');
+  const rows=[]; let row=[]; let cur=''; let inQuotes=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(inQuotes){
+      if(c==='"'){ if(text[i+1]==='"'){ cur+='"'; i++; } else { inQuotes=false; } }
+      else { cur+=c; }
+    }else{
+      if(c==='"'){ inQuotes=true; }
+      else if(c===','){ row.push(cur); cur=''; }
+      else if(c==='\r'){ /* skip */ }
+      else if(c==='\n'){ row.push(cur); cur=''; rows.push(row); row=[]; }
+      else { cur+=c; }
+    }
+  }
+  if(cur.length||row.length){ row.push(cur); rows.push(row); }
+  return rows;
+}
+function normKey(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
+const FIELD_ALIASES={
+  date:['date'], time:['time'], park:['park'],
+  observer:['observerinitials','observer'],
+  vtype:['vehicletype','vehicle'],
+  people:['peopleinvehicle','people'],
+  returning:['returningcampers','returning'],
+  netnew:['netnewpeople','netnew'],
+  passes:['passes'],
+  passOld:['parkingpass','pass'],       /* old Yes/No column */
+  activity:['primaryactivity','activity','entrypurpose','purpose'],
+  sky:['sky'], precip:['precipitation','precip'],
+  temp:['tempf','temp'], humidity:['humiditypct','humidity'],
+  cloud:['cloudcoverpct','cloudcover','cloud'],
+  wind:['wind'], notes:['notes']
+};
+function buildColMap(headerCells){
+  const norm=headerCells.map(normKey);
+  const map={};
+  for(const[field,aliases] of Object.entries(FIELD_ALIASES)){
+    for(const alias of aliases){
+      const idx=norm.findIndex(n=>n===alias);
+      if(idx!==-1){ map[field]=idx; break; }
+    }
+  }
+  return map;
+}
+function parsePasses(str,oldYesNo){
+  if(str && str.trim()){
+    const list=str.split(/[;|]/).map(s=>s.trim()).filter(Boolean).filter(s=>s.toLowerCase()!=='none');
+    return list;
+  }
+  /* fall back to old Yes/No pass column */
+  if(oldYesNo!==undefined){
+    const v=String(oldYesNo).trim().toLowerCase();
+    if(v==='yes'||v==='y') return ['Pass (unspecified)'];
+  }
+  return [];
+}
+function parseAnyLog(text){
+  const rows=parseCsv(text);
+  let headerIdx=-1, headerCells=[];
+  for(let i=0;i<rows.length;i++){
+    if(rows[i].length && normKey(rows[i][0])==='entry'){ headerIdx=i; headerCells=rows[i]; break; }
+  }
+  if(headerIdx===-1) throw new Error('No "Entry #" header row found in this file.');
+  const colMap=buildColMap(headerCells);
+  const dataRows=[];
+  for(let i=headerIdx+1;i<rows.length;i++){
+    const r=rows[i];
+    if(!r.length||r.every(c=>!c||!c.trim())) break;
+    dataRows.push(r);
+  }
+  const get=(r,f,fb)=> (colMap[f]!==undefined && r[colMap[f]]!==undefined && r[colMap[f]]!=='') ? r[colMap[f]] : fb;
+  return dataRows.map((r,i)=>{
+    const people=Number(get(r,'people',1))||1;
+    let returning=Number(get(r,'returning',0)); if(!(returning>=0)) returning=0;
+    returning=Math.min(returning,people);
+    const passes=parsePasses(get(r,'passes',''), colMap.passOld!==undefined?r[colMap.passOld]:undefined);
+    return {
+      num:i+1,
+      date:get(r,'date',''), time:get(r,'time',''), park:get(r,'park',''),
+      observer:get(r,'observer',''), vtype:get(r,'vtype','—'),
+      people, returning, netNew:people-returning,
+      passes, activity:get(r,'activity','Other'),
+      sky:get(r,'sky',''), precip:get(r,'precip',''),
+      temp:get(r,'temp',''), humidity:get(r,'humidity',''), cloud:get(r,'cloud','—'),
+      wind:get(r,'wind','—'), notes:get(r,'notes','')
+    };
+  });
+}
+
+/* ── CSV write helpers ── */
+function csvLine(arr){
+  return arr.map(v=>`"${String(v===undefined||v===null?'':v).replace(/"/g,'""')}"`).join(',');
+}
+function passStr(e){ return (e.passes&&e.passes.length)?e.passes.join('; '):'None'; }
+function entryToRow(e){
+  return [e.num,e.date,e.time,e.park,e.observer,e.vtype,e.people,e.returning,e.netNew,passStr(e),e.activity,e.sky,e.precip,e.temp,e.humidity,e.cloud,e.wind,e.notes];
+}
+
+/* ── live file: start new ── */
+function showLiveConfirm(msg){
+  document.getElementById('live-confirm').classList.add('show');
+  document.getElementById('live-confirm-txt').textContent=msg;
+  checkStartReady();
+}
+async function chooseNewFile(){
+  try{
+    const park=document.getElementById('park-sel').value;
+    const suggested=`ParkCount_${park.replace(/[^A-Za-z0-9]+/g,'_')}_${getWeekendLabel(new Date())}.csv`;
+    const handle=await window.showSaveFilePicker({
+      suggestedName:suggested,
+      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]
+    });
+    const writable=await handle.createWritable();
+    await writable.write(csvLine(CSV_HEADER)+'\r\n');
+    await writable.close();
+    sess.fileHandle=handle; sess.liveMode=true;
+    document.getElementById('opt-new').classList.add('chosen');
+    document.getElementById('opt-import').classList.remove('chosen');
+    showLiveConfirm('Connected → '+handle.name);
+  }catch(e){ if(e.name!=='AbortError') console.error(e); }
+}
+
+/* ── live file: import any log, then save-as a fresh live file seeded with it ── */
+async function importAndContinue(){
+  try{
+    const[srcHandle]=await window.showOpenFilePicker({
+      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]
+    });
+    const file=await srcHandle.getFile();
+    const text=await file.text();
+    const imported=parseAnyLog(text);
+
+    const park=document.getElementById('park-sel').value;
+    const suggested=`ParkCount_${park.replace(/[^A-Za-z0-9]+/g,'_')}_${getWeekendLabel(new Date())}.csv`;
+    const destHandle=await window.showSaveFilePicker({
+      suggestedName:suggested,
+      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]
+    });
+
+    entries=imported.map((e,i)=>({...e,num:i+1,park:e.park||park}));
+    totalPpl=entries.reduce((s,e)=>s+e.netNew,0);
+    totalReturn=entries.reduce((s,e)=>s+e.returning,0);
+
+    const lines=[csvLine(CSV_HEADER),...entries.map(e=>csvLine(entryToRow(e)))];
+    const writable=await destHandle.createWritable();
+    await writable.write(lines.join('\r\n')+'\r\n');
+    await writable.close();
+
+    sess.fileHandle=destHandle; sess.liveMode=true;
+    document.getElementById('opt-import').classList.add('chosen');
+    document.getElementById('opt-new').classList.remove('chosen');
+    showLiveConfirm(`Imported ${entries.length} rows from ${file.name} → now live in ${destHandle.name}`);
+  }catch(e){ if(e.name!=='AbortError'){ console.error(e); alert('Import failed: '+e.message); } }
+}
+function skipLiveFile(){ sess.liveMode=false; checkStartReady(); }
+function checkStartReady(){
+  const parkOk=!!document.getElementById('park-sel').value;
+  const fileOk=sess.liveMode||!FS_SUPPORTED;
+  document.getElementById('start-btn').disabled=!(parkOk&&fileOk);
+}
+
+async function appendLiveRow(e){
+  if(!sess.fileHandle) return;
+  try{
+    const file=await sess.fileHandle.getFile();
+    const writable=await sess.fileHandle.createWritable({keepExistingData:true});
+    const line=csvLine(entryToRow(e))+'\r\n';
+    await writable.write({type:'write',position:file.size,data:line});
+    await writable.close();
+    sess.lastSaveOk=true; sess.lastSaveTime=new Date();
+  }catch(err){
+    sess.lastSaveOk=false; console.error('live save failed',err);
+  }
+  updateLiveBadge();
+}
+function updateLiveBadge(){
+  const el=document.getElementById('foot-live');
+  const txt=document.getElementById('foot-live-txt');
+  if(!sess.liveMode){
+    el.className='foot-live off'; txt.textContent='auto-saved in browser · export to keep a CSV';
+  }else if(sess.lastSaveOk===false){
+    el.className='foot-live off'; txt.textContent='live save failed — check file access';
+  }else{
+    el.className='foot-live ok';
+    let agoTxt='';
+    if(sess.lastSaveTime){
+      const secs=Math.round((Date.now()-sess.lastSaveTime)/1000);
+      agoTxt = secs<60 ? ` · saved ${secs}s ago` : ` · saved ${Math.floor(secs/60)}m ago`;
+    }
+    txt.textContent=`live → ${sess.fileHandle.name}${agoTxt}`;
+  }
+}
+
+/* ── session start ── */
+function startSession(){
+  const park=document.getElementById('park-sel').value;
+  if(!park){alert('Please select a park.');return;}
+  sess.park=park; sess.initials=(document.getElementById('init-inp').value.trim().toUpperCase()||'—');
+  document.getElementById('h-park').textContent=park+' State Park';
+  document.getElementById('h-loc').textContent=sess.lat?`${sess.lat.toFixed(4)}, ${sess.lon.toFixed(4)} (fixed park coordinates)`:'—';
+  if(sess.wx) applyWxStrip(sess.wx);
+  document.getElementById('setup').classList.remove('active');
+  document.getElementById('dash').classList.add('active');
+  updateClock(); setInterval(updateClock,1000);
+  scheduleWxRefresh();                 /* auto weather every 15–25 min */
+  resetForm();
+  updateStats(); drawRing(); renderActBars(); renderPassBars(); renderEntries(); updateLiveBadge();
+  updateFooter();
+  saveState();
+}
+function updateClock(){
+  const n=new Date();
+  document.getElementById('h-time').textContent=n.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
+  document.getElementById('h-date').textContent=n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  updateWxAsOf();
+  if(sess.liveMode) updateLiveBadge();
+}
+function applyWxStrip(wx){
+  document.getElementById('e-sky').textContent=wx.sky;
+  document.getElementById('e-temp').textContent=wx.temp+'°F';
+  document.getElementById('e-pr').textContent=wx.precip;
+  document.getElementById('e-cloud').textContent=wx.cloud+'%';
+  document.getElementById('e-wind').textContent=wx.wind;
+  document.getElementById('e-hum').textContent=wx.humidity+'%';
+  sess.wxAt=new Date();
+  updateWxAsOf();
+}
+function updateWxAsOf(){
+  const el=document.getElementById('wx-asof');
+  if(!el) return;
+  if(!sess.wxAt){ el.textContent=''; return; }
+  const secs=Math.round((Date.now()-sess.wxAt)/1000);
+  let txt = secs<60 ? 'just now' : secs<3600 ? Math.floor(secs/60)+'m ago' : Math.floor(secs/3600)+'h ago';
+  el.textContent='updated '+txt;
+  el.style.color = secs>1800 ? 'var(--rust)' : 'var(--muted-dim)';
+}
+/* auto-refresh weather on a randomized 15–25 minute cadence, then re-schedule */
+function scheduleWxRefresh(){
+  if(wxTimer) clearTimeout(wxTimer);
+  const mins=15+Math.random()*10;      /* 15–25 min */
+  wxTimer=setTimeout(async()=>{
+    await refreshWeather();
+    scheduleWxRefresh();
+  }, mins*60*1000);
+}
+async function refreshWeather(){
+  if(!sess.lat||!sess.lon) return;
+  try{const wx=await fetchWx(sess.lat,sess.lon); sess.wx=wx; applyWxStrip(wx);}catch(e){}
+}
+
+/* ── form controls ── */
+function updateReturnUI(){
+  document.getElementById('ret-val').textContent=curReturn;
+  document.getElementById('ret-minus').disabled=curReturn<=0;
+  document.getElementById('ret-plus').disabled=curReturn>=curPpl;
+}
+function setPeople(n){
+  curPpl=Math.max(1,n);
+  if(curReturn>curPpl) curReturn=curPpl;
+  document.getElementById('ppl-val').textContent=curPpl;
+  document.getElementById('minus-btn').disabled=curPpl<=1;
+  updateReturnUI();
+}
+function adjPeople(d){ setPeople(curPpl+d); }
+function adjReturn(d){
+  curReturn=Math.max(0,Math.min(curPpl,curReturn+d));
+  updateReturnUI();
+}
+function selPass(btn){
+  const v=btn.dataset.v;
+  const wrap=document.getElementById('pass-wrap');
+  const noneBtn=wrap.querySelector('.chip[data-v="None"]');
+  if(v==='None'){
+    wrap.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+    noneBtn.classList.add('active');
+  }else{
+    noneBtn.classList.remove('active');
+    btn.classList.toggle('active');
+    const anyTag=[...wrap.querySelectorAll('.chip.pass-tag')].some(b=>b.classList.contains('active'));
+    if(!anyTag) noneBtn.classList.add('active');
+  }
+  curPasses=[...wrap.querySelectorAll('.chip.pass-tag.active')].map(b=>b.dataset.v);
+  chkReady();
+}
+function selAct(btn){
+  document.querySelectorAll('#act-wrap .chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); curAct=btn.dataset.v; chkReady();
+}
+function selVtype(btn){
+  document.querySelectorAll('#vtype-wrap .chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); curVtype=btn.dataset.v; chkReady();
+}
+function chkReady(){ document.getElementById('log-btn').disabled=!(curVtype&&curAct); }
+
+function resetForm(){
+  curPpl=1; curReturn=0; curPasses=[]; curAct=null;
+  document.getElementById('ppl-val').textContent='1';
+  document.getElementById('minus-btn').disabled=true;
+  document.querySelectorAll('#act-wrap .chip, #pass-wrap .chip').forEach(b=>b.classList.remove('active'));
+  document.getElementById('notes').value='';
+  updateReturnUI();
+  /* default vehicle = Car/SUV, default pass = None */
+  document.querySelectorAll('#vtype-wrap .chip').forEach(b=>b.classList.remove('active'));
+  const defaultV=document.querySelector('#vtype-wrap .chip[data-v="Car/SUV"]');
+  defaultV.classList.add('active'); curVtype='Car/SUV';
+  document.querySelector('#pass-wrap .chip[data-v="None"]').classList.add('active');
+  document.getElementById('log-btn').disabled=true;
+}
+
+function logEntry(){
+  if(document.getElementById('log-btn').disabled) return;
+  document.getElementById('log-btn').disabled=true;
+  const now=new Date();
+  const wx=sess.wx||{};
+  const netNew=curPpl-curReturn;
+  const entry={
+    num:entries.length+1,
+    date:now.toLocaleDateString('en-US',{month:'2-digit',day:'2-digit',year:'numeric'}),
+    time:now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}),
+    park:sess.park, observer:sess.initials, vtype:curVtype,
+    people:curPpl, returning:curReturn, netNew,
+    passes:[...curPasses], activity:curAct,
+    sky:wx.sky||'', precip:wx.precip||'', temp:wx.temp!==undefined?wx.temp:'',
+    humidity:wx.humidity!==undefined?wx.humidity:'', cloud:wx.cloud!==undefined?wx.cloud:'',
+    wind:wx.wind||'', notes:document.getElementById('notes').value.trim()
+  };
+  entries.push(entry); totalPpl+=netNew; totalReturn+=curReturn;
+  saveState();
+
+  const btn=document.getElementById('log-btn'); const prev=btn.textContent;
+  btn.classList.add('flash'); btn.textContent='✓ Logged';
+
+  appendLiveRow(entry);
+  updateStats(); drawRing(); renderActBars(); renderPassBars(); renderEntries(); updateFooter();
+
+  setTimeout(()=>{ btn.classList.remove('flash'); btn.textContent=prev; resetForm(); },340);
+}
+function updateFooter(){
+  document.getElementById('ft-n').textContent=entries.length;
+  document.getElementById('ft-p').textContent=totalPpl;
+  document.getElementById('ft-r').textContent=totalReturn;
+}
+
+function updateStats(){
+  document.getElementById('st-cars').textContent=entries.length;
+  document.getElementById('st-new').textContent=totalPpl;
+  const grossPpl=entries.reduce((s,e)=>s+e.people,0);
+  document.getElementById('st-new-sub').textContent=`${grossPpl} total · ${totalReturn} returning`;
+  document.getElementById('st-avg').textContent=entries.length?(totalPpl/entries.length).toFixed(1):'0.0';
+  const passCount=entries.filter(e=>e.passes&&e.passes.length).length;
+  document.getElementById('st-pass').textContent=entries.length?Math.round(passCount/entries.length*100)+'%':'0%';
+}
+function drawRing(){
+  const svg=document.getElementById('ring-svg');
+  const cx=80,cy=80,radii=[24,36,48,60,72];
+  const count=entries.length;
+  let parts=[`<circle cx="${cx}" cy="${cy}" r="2.5" fill="#D9A441"/>`];
+  radii.forEach((r,i)=>{
+    const lower=i*5;
+    const progress=Math.max(0,Math.min(1,(count-lower)/5));
+    const circ=2*Math.PI*r;
+    parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2C4633" stroke-width="1.1"/>`);
+    if(progress>0){
+      const dash=progress*circ;
+      parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#D9A441" stroke-width="2" stroke-linecap="round" stroke-dasharray="${dash} ${circ}" transform="rotate(-90 ${cx} ${cy})" opacity="${progress>=1?1:0.85}"/>`);
+    }
+  });
+  parts.push(`<text x="${cx}" y="${cy-2}" text-anchor="middle" font-family="Fraunces,serif" font-size="32" font-weight="600" fill="#E9F0E7">${count}</text>`);
+  parts.push(`<text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1px" fill="#7FA084">VEHICLES</text>`);
+  svg.innerHTML=parts.join('');
+}
+function renderBars(wrapId,order,countFn,emptyMsg){
+  const wrap=document.getElementById(wrapId);
+  if(!entries.length){ wrap.innerHTML=`<div class="empty-note">${emptyMsg}</div>`; return; }
+  const counts={}; order.forEach(k=>counts[k]=0);
+  countFn(counts);
+  const keys=Object.keys(counts).filter(k=>counts[k]>0).sort((a,b)=>counts[b]-counts[a]);
+  if(!keys.length){ wrap.innerHTML=`<div class="empty-note">${emptyMsg}</div>`; return; }
+  const max=Math.max(...keys.map(k=>counts[k]),1);
+  wrap.innerHTML=keys.map(k=>`
+    <div class="bar-row">
+      <div class="bar-top"><span>${k}</span><span class="bar-n mono">${counts[k]}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(counts[k]/max*100).toFixed(0)}%"></div></div>
+    </div>`).join('');
+}
+function renderActBars(){
+  renderBars('act-bars',ACT_ORDER,(c)=>{
+    entries.forEach(e=>{ c[e.activity]=(c[e.activity]||0)+1; });
+  },'No entries yet');
+}
+function renderPassBars(){
+  renderBars('pass-bars',PASS_ORDER,(c)=>{
+    entries.forEach(e=>{ (e.passes||[]).forEach(p=>{ c[p]=(c[p]||0)+1; }); });
+  },'No passes logged yet');
+}
+function renderEntries(){
+  const wrap=document.getElementById('entries-list');
+  if(!entries.length){ wrap.innerHTML='<div class="empty-note">Logged vehicles appear here</div>'; return; }
+  wrap.innerHTML=[...entries].reverse().slice(0,10).map(e=>{
+    const hasPass=e.passes&&e.passes.length;
+    const dotClass=hasPass?'dot-yes':'dot-unk';
+    const passText=hasPass?e.passes.join(', '):'';
+    const retTag=e.returning?`<span class="e-ret">↩${e.returning}</span>`:'';
+    const tail=[passText,e.notes].filter(Boolean).join(' · ');
+    return `<div class="e-row">
+      <span class="e-t">${e.time}</span>
+      <span class="e-p">${e.people}p${retTag}</span>
+      <span class="e-vt">${e.vtype||''}</span>
+      <span class="e-d"><span class="e-dot ${dotClass}"></span>${e.activity}${tail?' · '+tail:''}</span>
+    </div>`;
+  }).join('');
+}
+
+function exportCSV(){
+  if(!entries.length){alert('No entries to export yet!');return;}
+  const rows=entries.map(e=>csvLine(entryToRow(e)));
+  const csv=[csvLine(CSV_HEADER),...rows].join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'-');
+  const a=document.createElement('a');
+  a.href=url; a.download=`ParkCount_Backup_${(sess.park||'park').replace(/[^A-Za-z0-9]+/g,'_')}_${d}.csv`; a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ── keyboard shortcuts (dashboard only) ── */
+document.addEventListener('keydown',(e)=>{
+  if(!document.getElementById('dash').classList.contains('active')) return;
+  const tag=document.activeElement.tagName;
+  if(tag==='TEXTAREA'||tag==='INPUT') return;
+  if(e.key>='1'&&e.key<='9'){ setPeople(Number(e.key)); }
+  if(e.key==='Enter' && !e.repeat){ logEntry(); }
+});
+
+/* ── feature detection ── */
+if(!FS_SUPPORTED){
+  document.getElementById('fs-supported-block').classList.add('hidden');
+  document.getElementById('fs-unsupported-block').classList.remove('hidden');
+}
+
+/* ── on load: offer to resume an unfinished session (crash recovery) ── */
+maybeShowRestore();
+</script>
+</body>
+</html>
