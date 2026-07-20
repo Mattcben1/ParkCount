@@ -62,9 +62,7 @@ select:focus,input:focus{border-color:var(--amber)}
 .wx-chip{display:flex;flex-direction:column;align-items:center;gap:3px;padding:3px 0}
 .wx-v{font-size:12.5px;font-weight:600}
 .wx-l{font-size:8.5px;color:var(--muted-dim);text-transform:uppercase;letter-spacing:.5px}
-
 .divider{height:1px;background:var(--line);margin:18px 0}
-
 .file-opt-row{display:flex;gap:8px;margin-bottom:10px}
 .file-opt{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--text);padding:13px 8px;font-size:12.5px;font-weight:600;cursor:pointer;text-align:center;line-height:1.35}
 .file-opt:disabled{opacity:.35;cursor:not-allowed}
@@ -78,64 +76,74 @@ select:focus,input:focus{border-color:var(--amber)}
 .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
 .dot-live{background:var(--moss)}
 .dot-off{background:var(--rust)}
-
 .start-btn{width:100%;background:var(--amber);border:none;border-radius:var(--r-sm);color:#1A1206;padding:14px;font-size:14.5px;font-weight:700;cursor:pointer;letter-spacing:.2px}
 .start-btn:disabled{opacity:.3}
-.dev-link{width:100%;background:none;border:none;color:var(--muted-dim);font-size:11.5px;font-weight:600;cursor:pointer;margin-top:12px;padding:4px}
+.test-btn{width:100%;background:transparent;border:1px dashed var(--sky);border-radius:var(--r-sm);color:var(--sky);padding:11px;font-size:12.5px;font-weight:700;cursor:pointer;margin-top:9px}
+.dev-link{width:100%;background:none;border:none;color:var(--muted-dim);font-size:11.5px;font-weight:600;cursor:pointer;margin-top:11px;padding:4px}
 .dev-link:hover{color:var(--amber)}
 
 /* ════ DASHBOARD ════ */
 #dash.active{display:block}
-.dash-wrap{max-width:1140px;margin:0 auto;padding:0 20px 84px}
-
-.d-header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 14px;flex-wrap:wrap;gap:10px}
+.dash-wrap{max-width:1180px;margin:0 auto;padding:0 20px 84px}
+.d-header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 12px;flex-wrap:wrap;gap:10px}
 .d-id{display:flex;align-items:center;gap:12px}
 .d-mark{width:32px;height:32px;flex-shrink:0}
 .d-park{font-family:'Fraunces',serif;font-size:18px;font-weight:600}
 .d-loc{font-size:10.5px;color:var(--muted-dim);font-family:'JetBrains Mono',monospace;margin-top:1px}
 .d-clock{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:600;color:var(--amber);text-align:right}
 .d-date{font-size:10.5px;color:var(--muted-dim);text-align:right;margin-top:1px}
+.test-banner{display:none;background:rgba(91,148,194,.12);border:1px solid var(--sky);border-radius:var(--r-sm);color:var(--sky);padding:8px 13px;font-size:11.5px;font-weight:600;margin-bottom:12px;align-items:center;gap:9px}
+.test-banner.show{display:flex}
+.test-banner button{background:transparent;border:1px solid var(--sky);border-radius:6px;color:var(--sky);padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;margin-left:auto}
+
+.tabs{display:flex;gap:6px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted-dim);padding:9px 15px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:-1px}
+.tab.active{color:var(--amber);border-bottom-color:var(--amber)}
+.pane{display:none}
+.pane.active{display:block}
 
 .wx-strip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:11px 16px;display:flex;align-items:center;gap:18px;overflow-x:auto;margin-bottom:16px}
 .wx-i{display:flex;align-items:center;gap:6px;white-space:nowrap}
 .wx-i-v{font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace}
-.wx-asof{margin-left:auto;font-size:10.5px;color:var(--muted-dim);font-family:'JetBrains Mono',monospace;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.wx-asof{margin-left:auto;font-size:10.5px;color:var(--muted-dim);font-family:'JetBrains Mono',monospace;white-space:nowrap}
 .wx-auto{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted-dim);font-family:'JetBrains Mono',monospace;white-space:nowrap;flex-shrink:0}
 .wx-auto .pulse{width:6px;height:6px;border-radius:50%;background:var(--moss);animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
 
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;margin-bottom:16px}
 .stat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:13px 14px 11px}
-.stat-v{font-family:'Fraunces',serif;font-size:27px;font-weight:600;line-height:1}
+.stat-v{font-family:'Fraunces',serif;font-size:26px;font-weight:600;line-height:1}
+.stat-v.sm{font-size:19px}
 .stat-l{font-size:10px;color:var(--muted-dim);text-transform:uppercase;letter-spacing:.8px;margin-top:5px}
 .stat-sub{font-size:9.5px;color:var(--muted-dim);margin-top:2px}
+.stat-card.accent-new{border-left:3px solid var(--amber)}
+.stat-card.accent-ret{border-left:3px solid var(--rust)}
 
 .main-grid{display:grid;grid-template-columns:0.82fr 1.18fr;gap:14px;align-items:start}
 .col{display:flex;flex-direction:column;gap:14px}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
 .panel-ttl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted);margin-bottom:13px;display:flex;align-items:center;gap:8px}
 .panel-ttl::after{content:'';flex:1;height:1px;background:var(--line)}
-
 .ring-wrap{display:flex;flex-direction:column;align-items:center;padding:2px 0}
 .ring-cap{font-size:10.5px;color:var(--muted-dim);margin-top:8px;text-align:center}
-
 .bar-row{margin-bottom:10px}
 .bar-row:last-child{margin-bottom:0}
 .bar-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
 .bar-n{font-family:'JetBrains Mono',monospace;color:var(--muted)}
 .bar-track{height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden}
 .bar-fill{height:100%;background:var(--amber);border-radius:3px;width:0%;transition:width .35s ease}
-.empty-note{color:var(--muted-dim);font-size:12.5px;text-align:center;padding:24px 0}
+.empty-note{color:var(--muted-dim);font-size:12.5px;text-align:center;padding:24px 0;line-height:1.5}
 
-/* ── tidied log form: label above, full-width chip rows ── */
 .fld{margin-bottom:15px}
 .fld-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);margin-bottom:8px;display:flex;align-items:baseline;gap:8px}
 .fld-sub{font-size:9.5px;font-weight:500;letter-spacing:.3px;text-transform:none;color:var(--muted-dim)}
 .chip-wrap{display:flex;flex-wrap:wrap;gap:6px}
-.chip{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;color:var(--muted);padding:7px 11px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.chip{position:relative;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;color:var(--muted);padding:7px 11px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
 .chip.active{border-color:var(--amber);background:rgba(217,164,65,.14);color:var(--text)}
 .chip.pass-none.active{border-color:var(--muted);background:rgba(127,160,132,.14);color:var(--muted)}
 .chip.pass-tag.active{border-color:var(--moss);background:rgba(111,168,113,.16);color:var(--moss)}
+.chip-x{display:inline-block;margin-left:7px;color:var(--rust);font-weight:700}
+.chip-add{border-style:dashed;border-color:var(--amber-dim);color:var(--amber)}
 .ppl-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .ctr-mini{display:flex;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;overflow:hidden;flex-shrink:0}
 .ctr-mini button{background:none;border:none;color:var(--text);font-size:18px;width:34px;height:34px;cursor:pointer}
@@ -143,11 +151,11 @@ select:focus,input:focus{border-color:var(--amber)}
 .ctr-mini span{width:32px;text-align:center;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px}
 .ret-btn{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;color:var(--muted);padding:8px 14px;font-size:12.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
 .ret-btn.active{border-color:var(--rust);background:rgba(194,105,63,.16);color:var(--rust)}
-.ret-hint{font-size:10.5px;color:var(--rust);display:none}
+.ret-hint{font-size:10.5px;color:var(--rust);display:none;max-width:210px;line-height:1.35}
 .ret-hint.show{display:inline}
-textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--text);padding:10px 12px;font-size:13.5px;resize:none;outline:none;height:40px;margin-bottom:14px}
+textarea{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--text);padding:10px 12px;font-size:13.5px;resize:none;outline:none;height:40px}
 textarea:focus{border-color:var(--amber)}
-.log-btn{width:100%;background:var(--amber);border:none;border-radius:var(--r-md);color:#1A1206;padding:14px;font-size:14.5px;font-weight:700;cursor:pointer;letter-spacing:.3px}
+.log-btn{width:100%;background:var(--amber);border:none;border-radius:var(--r-md);color:#1A1206;padding:14px;font-size:14.5px;font-weight:700;cursor:pointer;letter-spacing:.3px;margin-top:14px}
 .log-btn:disabled{opacity:.28}
 .log-btn.flash{background:var(--moss)!important}
 .kbd-hint{font-size:10.5px;color:var(--muted-dim);text-align:center;margin-top:8px}
@@ -162,8 +170,24 @@ textarea:focus{border-color:var(--amber)}
 .e-vt{color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .e-d{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .e-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:middle}
-.dot-yes{background:var(--moss)}.dot-no{background:var(--rust)}.dot-unk{background:var(--muted-dim)}
+.dot-yes{background:var(--moss)}.dot-unk{background:var(--muted-dim)}
 
+/* ════ ANALYTICS ════ */
+.ana-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;align-items:start}
+.ana-full{grid-column:1/-1}
+.chart-note{font-size:10.5px;color:var(--muted-dim);margin-top:9px;line-height:1.5}
+.ci-band{display:flex;align-items:baseline;gap:7px;font-family:'JetBrains Mono',monospace}
+.ci-lo,.ci-hi{font-size:15px;color:var(--muted)}
+.ci-mid{font-size:26px;font-weight:600;color:var(--amber);font-family:'Fraunces',serif}
+.ana-kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px}
+.ana-kv:last-child{border-bottom:none}
+.ana-kv span:last-child{font-family:'JetBrains Mono',monospace;color:var(--text);font-weight:600}
+.ana-kv .warn{color:var(--rust)}
+.ana-kv .good{color:var(--moss)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:10.5px;color:var(--muted-dim)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:middle}
+
+/* ════ FOOTER ════ */
 .d-footer{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);padding:11px 20px;display:flex;align-items:center;justify-content:space-between;z-index:50;flex-wrap:wrap;gap:8px}
 .foot-l{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .foot-r{display:flex;align-items:center;gap:8px}
@@ -176,40 +200,47 @@ textarea:focus{border-color:var(--amber)}
 .foot-ghost{background:transparent;border:1px solid var(--line);border-radius:8px;color:var(--muted);padding:9px 13px;font-size:12.5px;font-weight:600;cursor:pointer}
 .foot-ghost:hover{border-color:var(--amber-dim);color:var(--amber)}
 
-/* ════ DEVELOPER MODE ════ */
-.dev-overlay{display:none;position:fixed;inset:0;background:rgba(6,12,8,.8);z-index:200;align-items:center;justify-content:center;padding:24px}
+/* ════ DEV MODE — live in-place editing ════ */
+.dev-overlay{display:none;position:fixed;inset:0;background:rgba(6,12,8,.8);z-index:300;align-items:center;justify-content:center;padding:24px}
 .dev-overlay.show{display:flex}
-.dev-modal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);width:100%;max-width:560px;max-height:86vh;overflow-y:auto;padding:20px}
-.dev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.dev-modal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);width:100%;max-width:420px;padding:22px}
+.dev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .dev-ttl{font-family:'Fraunces',serif;font-size:19px;font-weight:600}
 .dev-x{background:none;border:none;color:var(--muted);font-size:19px;cursor:pointer;line-height:1;padding:2px 6px}
 .dev-note{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5}
 #dev-code{text-align:center;letter-spacing:9px;font-size:20px;font-family:'JetBrains Mono',monospace;margin-bottom:10px}
 .dev-err{color:var(--rust);font-size:12px;min-height:17px;margin-bottom:8px;text-align:center}
 .dev-primary{width:100%;background:var(--amber);border:none;border-radius:var(--r-sm);color:#1A1206;padding:12px;font-size:14px;font-weight:700;cursor:pointer}
-.dev-sec{border-top:1px solid var(--line);padding-top:15px;margin-top:16px}
-.dev-sec-ttl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--amber);margin-bottom:10px}
-.dev-item{display:flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:6px 8px;margin-bottom:6px}
-.dev-item-name{flex:1;font-size:13px;overflow:hidden;text-overflow:ellipsis}
-.dev-item button{background:none;border:1px solid var(--line);border-radius:5px;color:var(--muted);width:27px;height:27px;font-size:12px;cursor:pointer;flex-shrink:0}
-.dev-item button:disabled{opacity:.28;cursor:default}
-.dev-item .dev-del{color:var(--rust);border-color:rgba(194,105,63,.5)}
-.dev-add{display:flex;gap:6px;margin-top:9px}
-.dev-add input{flex:1;padding:9px 12px;font-size:13px}
-.dev-add button{background:var(--surface-3);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--text);padding:0 18px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
-.dev-empty{font-size:12px;color:var(--muted-dim);padding:5px 0}
-.dev-tg{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13px;cursor:pointer}
-.dev-tg input{width:16px;height:16px;accent-color:var(--amber);cursor:pointer}
-.dev-reset{width:100%;background:transparent;border:1px solid rgba(194,105,63,.6);border-radius:var(--r-sm);color:var(--rust);padding:11px;font-size:12.5px;font-weight:700;cursor:pointer;margin-top:16px}
-.dev-done{width:100%;background:var(--moss);border:none;border-radius:var(--r-sm);color:#0E1812;padding:12px;font-size:13.5px;font-weight:700;cursor:pointer;margin-top:9px}
 
+.dev-bar{display:none;position:fixed;top:0;left:0;right:0;background:var(--amber);color:#1A1206;z-index:250;padding:9px 18px;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 2px 14px rgba(0,0,0,.4)}
+body.dev-on .dev-bar{display:flex}
+body.dev-on{padding-top:44px}
+.dev-bar-ttl{font-weight:800;font-size:12.5px;letter-spacing:.4px}
+.dev-bar-hint{font-size:11.5px;opacity:.82;flex:1;min-width:180px}
+.dev-bar button{background:rgba(26,18,6,.14);border:1px solid rgba(26,18,6,.4);border-radius:7px;color:#1A1206;padding:6px 13px;font-size:11.5px;font-weight:700;cursor:pointer}
+.dev-bar button.solid{background:#1A1206;color:var(--amber);border-color:#1A1206}
+
+[data-block]{position:relative}
+body.dev-on [data-block]{outline:1px dashed rgba(217,164,65,.4);outline-offset:2px;border-radius:6px}
+.blk-hidden{display:none!important}
+body.dev-on .blk-hidden{display:block!important;opacity:.32;outline:1px dashed var(--rust)}
+.blk-ctl{position:absolute;top:-11px;right:6px;display:flex;gap:3px;z-index:60}
+.blk-ctl button{background:var(--amber);border:none;border-radius:5px;color:#1A1206;width:23px;height:21px;font-size:11px;font-weight:700;cursor:pointer;padding:0;line-height:1}
+.blk-ctl button.off{background:var(--rust);color:#fff}
 @media(max-width:880px){
   .main-grid{grid-template-columns:1fr}
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
+
+<!-- ════ DEV BAR ════ -->
+<div class="dev-bar" id="dev-bar">
+  <span class="dev-bar-ttl">⚙ DEVELOPER MODE</span>
+  <span class="dev-bar-hint">Editing the live dashboard — drag nothing, just use ↑ ↓ to reorder, 👁 to hide, ✕ on a chip to delete, ＋ to add.</span>
+  <button onclick="devReset()">Reset all</button>
+  <button class="solid" onclick="exitDevEdit()">Done</button>
+</div>
 
 <!-- ════ SETUP ════ -->
 <div id="setup" class="screen active">
@@ -276,12 +307,13 @@ textarea:focus{border-color:var(--amber)}
       </div>
       <div id="fs-unsupported-block" class="hidden">
         <div class="fs-note">
-          Live CSV writing isn't available when the page is opened directly from a file. That's fine — your entries auto-save inside the browser as you log them, and you can tap <strong>Export CSV backup</strong> anytime. (For live writing to a CSV, open the hosted link instead.)
+          Live CSV writing isn't available when the page is opened directly from a file. Your entries auto-save inside the browser as you log them, and you can tap <strong>Export CSV backup</strong> anytime.
         </div>
         <button class="file-opt" style="width:100%;margin-bottom:14px" onclick="skipLiveFile()">⏭ Continue without live file</button>
       </div>
 
       <button class="start-btn" id="start-btn" disabled onclick="startSession()">Open dashboard →</button>
+      <button class="test-btn" onclick="enterTestMode()">🧪 Test mode — skip the file, load sample data</button>
       <button class="dev-link" onclick="openDev()">⚙ Developer mode</button>
     </div>
   </div>
@@ -309,83 +341,143 @@ textarea:focus{border-color:var(--amber)}
       </div>
     </div>
 
-    <div class="wx-strip" id="wx-strip">
-      <div class="wx-i"><span class="wx-i-v" id="e-sky">—</span></div>
-      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D9A441" stroke-width="1.8"><path d="M14 4a2 2 0 0 0-4 0v9.3a4.5 4.5 0 1 0 4 0V4Z"/></svg><span class="wx-i-v" id="e-temp">—</span></div>
-      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M12 3c3 4 6 7.2 6 10.5a6 6 0 0 1-12 0C6 10.2 9 7 12 3Z"/></svg><span class="wx-i-v" id="e-pr">—</span></div>
-      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><circle cx="9" cy="14" r="4"/><circle cx="15" cy="11" r="5"/></svg><span class="wx-i-v" id="e-cloud">—</span></div>
-      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M3 8h11a2.5 2.5 0 1 0-2.5-2.5M3 16h15a2.5 2.5 0 1 1-2.5 2.5M3 12h8"/></svg><span class="wx-i-v" id="e-wind">—</span></div>
-      <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M12 16a4 4 0 0 0 4-4c0-2-2-3-2-5a2 2 0 0 0-4 0c0 2-2 3-2 5a4 4 0 0 0 4 4Z"/></svg><span class="wx-i-v" id="e-hum">—</span></div>
-      <span class="wx-asof mono" id="wx-asof"></span>
-      <div class="wx-auto" id="wx-auto"><span class="pulse"></span><span>auto 15–25 min</span></div>
+    <div class="test-banner" id="test-banner">
+      🧪 TEST MODE — sample data, nothing is being saved to a real log.
+      <button onclick="loadSampleData()">Regenerate</button>
+      <button onclick="clearSampleData()">Clear</button>
     </div>
 
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-v mono" id="st-cars">0</div><div class="stat-l">Vehicles</div></div>
-      <div class="stat-card"><div class="stat-v mono" id="st-new">0</div><div class="stat-l">New visitors</div><div class="stat-sub" id="st-new-sub">0 total · 0 returning</div></div>
-      <div class="stat-card"><div class="stat-v mono" id="st-avg">0.0</div><div class="stat-l">Multiplier</div><div class="stat-sub">new visitors / vehicle</div></div>
-      <div class="stat-card"><div class="stat-v mono" id="st-pass">0%</div><div class="stat-l">Pass rate</div><div class="stat-sub">vehicles with a pass</div></div>
+    <div class="tabs">
+      <button class="tab active" id="tab-log" onclick="switchTab('log')">Field log</button>
+      <button class="tab" id="tab-ana" onclick="switchTab('ana')">📈 Analytics</button>
     </div>
 
-    <div class="main-grid">
-      <div class="col">
-        <div class="panel">
-          <div class="panel-ttl">Today's count</div>
-          <div class="ring-wrap">
-            <svg width="160" height="160" viewBox="0 0 160 160" id="ring-svg"></svg>
-            <div class="ring-cap">each contour ≈ 5 vehicles</div>
-          </div>
-        </div>
-        <div class="panel" id="panel-act">
-          <div class="panel-ttl">Activity</div>
-          <div id="act-bars"><div class="empty-note">No entries yet</div></div>
-        </div>
-        <div class="panel" id="panel-pass">
-          <div class="panel-ttl">Passes presented</div>
-          <div id="pass-bars"><div class="empty-note">No entries yet</div></div>
-        </div>
-        <div class="panel">
-          <div class="panel-ttl">Recent entries</div>
-          <div class="entries-list" id="entries-list"><div class="empty-note">Logged vehicles appear here</div></div>
+    <!-- ── FIELD LOG PANE ── -->
+    <div class="pane active" id="pane-log">
+      <div data-container="topwrap">
+        <div class="wx-strip" data-block="wx-strip">
+          <div class="wx-i"><span class="wx-i-v" id="e-sky">—</span></div>
+          <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D9A441" stroke-width="1.8"><path d="M14 4a2 2 0 0 0-4 0v9.3a4.5 4.5 0 1 0 4 0V4Z"/></svg><span class="wx-i-v" id="e-temp">—</span></div>
+          <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M12 3c3 4 6 7.2 6 10.5a6 6 0 0 1-12 0C6 10.2 9 7 12 3Z"/></svg><span class="wx-i-v" id="e-pr">—</span></div>
+          <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><circle cx="9" cy="14" r="4"/><circle cx="15" cy="11" r="5"/></svg><span class="wx-i-v" id="e-cloud">—</span></div>
+          <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M3 8h11a2.5 2.5 0 1 0-2.5-2.5M3 16h15a2.5 2.5 0 1 1-2.5 2.5M3 12h8"/></svg><span class="wx-i-v" id="e-wind">—</span></div>
+          <div class="wx-i"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7FA084" stroke-width="1.8"><path d="M12 16a4 4 0 0 0 4-4c0-2-2-3-2-5a2 2 0 0 0-4 0c0 2-2 3-2 5a4 4 0 0 0 4 4Z"/></svg><span class="wx-i-v" id="e-hum">—</span></div>
+          <span class="wx-asof mono" id="wx-asof"></span>
+          <div class="wx-auto"><span class="pulse"></span><span>auto 15–25 min</span></div>
         </div>
       </div>
 
-      <div class="col">
-        <div class="panel">
-          <div class="panel-ttl">Log a vehicle</div>
+      <div class="stat-grid" data-container="stats">
+        <div class="stat-card" data-block="stat-vehicles"><div class="stat-v mono" id="st-cars">0</div><div class="stat-l">Vehicles</div><div class="stat-sub" id="st-cars-sub">0 new · 0 returning</div></div>
+        <div class="stat-card accent-new" data-block="stat-new"><div class="stat-v mono" id="st-new">0</div><div class="stat-l">New visitors</div><div class="stat-sub">first entry today</div></div>
+        <div class="stat-card accent-new" data-block="stat-mult"><div class="stat-v mono" id="st-avg">0.0</div><div class="stat-l">New multiplier</div><div class="stat-sub">people / new vehicle</div></div>
+        <div class="stat-card accent-ret" data-block="stat-ret"><div class="stat-v mono" id="st-ret">0</div><div class="stat-l">Returning campers</div><div class="stat-sub" id="st-ret-sub">0 vehicles · 0.0 per veh</div></div>
+        <div class="stat-card" data-block="stat-pass"><div class="stat-v mono" id="st-pass">0%</div><div class="stat-l">Pass rate</div><div class="stat-sub">vehicles with a pass</div></div>
+      </div>
 
-          <div class="fld" id="row-vehicle">
-            <div class="fld-lbl">Vehicle</div>
-            <div class="chip-wrap" id="vtype-wrap"></div>
-          </div>
-
-          <div class="fld" id="row-people">
-            <div class="fld-lbl">People <span class="fld-sub">how many are with you today</span></div>
-            <div class="ppl-row">
-              <div class="ctr-mini">
-                <button id="minus-btn" onclick="adjPeople(-1)" disabled>−</button>
-                <span id="ppl-val">1</span>
-                <button onclick="adjPeople(1)">+</button>
-              </div>
-              <button class="ret-btn" id="ret-btn" onclick="toggleReturning()">↩ Returning</button>
-              <span class="ret-hint" id="ret-hint">whole vehicle already counted today</span>
+      <div class="main-grid">
+        <div class="col" data-container="leftcol">
+          <div class="panel" data-block="blk-ring">
+            <div class="panel-ttl">Today's count</div>
+            <div class="ring-wrap">
+              <svg width="160" height="160" viewBox="0 0 160 160" id="ring-svg"></svg>
+              <div class="ring-cap">each contour ≈ 5 vehicles</div>
             </div>
           </div>
-
-          <div class="fld" id="row-passes">
-            <div class="fld-lbl">Passes <span class="fld-sub">tap all that apply</span></div>
-            <div class="chip-wrap" id="pass-wrap"></div>
+          <div class="panel" data-block="blk-activity">
+            <div class="panel-ttl">Activity</div>
+            <div id="act-bars"><div class="empty-note">No entries yet</div></div>
           </div>
-
-          <div class="fld" id="row-activity">
-            <div class="fld-lbl">Activity <span class="fld-sub">what brings you in</span></div>
-            <div class="chip-wrap" id="act-wrap"></div>
+          <div class="panel" data-block="blk-passes">
+            <div class="panel-ttl">Passes presented</div>
+            <div id="pass-bars"><div class="empty-note">No entries yet</div></div>
           </div>
-
-          <textarea id="notes" placeholder="Notes (optional) — contractor, large group, pass #…"></textarea>
-          <button class="log-btn" id="log-btn" disabled onclick="logEntry()">Log this vehicle →</button>
-          <div class="kbd-hint">press <kbd>Enter</kbd> to log · number keys <kbd>1</kbd>–<kbd>9</kbd> set people</div>
+          <div class="panel" data-block="blk-entries">
+            <div class="panel-ttl">Recent entries</div>
+            <div class="entries-list" id="entries-list"><div class="empty-note">Logged vehicles appear here</div></div>
+          </div>
         </div>
+
+        <div class="col">
+          <div class="panel">
+            <div class="panel-ttl">Log a vehicle</div>
+            <div data-container="logform">
+              <div class="fld" data-block="row-vehicle">
+                <div class="fld-lbl">Vehicle</div>
+                <div class="chip-wrap" id="vtype-wrap"></div>
+              </div>
+              <div class="fld" data-block="row-people">
+                <div class="fld-lbl">People <span class="fld-sub">how many are with you today</span></div>
+                <div class="ppl-row">
+                  <div class="ctr-mini">
+                    <button id="minus-btn" onclick="adjPeople(-1)" disabled>−</button>
+                    <span id="ppl-val">1</span>
+                    <button onclick="adjPeople(1)">+</button>
+                  </div>
+                  <button class="ret-btn" id="ret-btn" onclick="toggleReturning()">↩ Returning camper</button>
+                  <span class="ret-hint" id="ret-hint">Existing camper re-entering (camping tag) — tracked separately, not a new arrival</span>
+                </div>
+              </div>
+              <div class="fld" data-block="row-passes">
+                <div class="fld-lbl">Passes <span class="fld-sub">tap all that apply</span></div>
+                <div class="chip-wrap" id="pass-wrap"></div>
+              </div>
+              <div class="fld" data-block="row-activity">
+                <div class="fld-lbl">Activity <span class="fld-sub">what brings you in</span></div>
+                <div class="chip-wrap" id="act-wrap"></div>
+              </div>
+              <div class="fld" data-block="row-notes">
+                <div class="fld-lbl">Notes <span class="fld-sub">optional</span></div>
+                <textarea id="notes" placeholder="contractor, large group, pass #…"></textarea>
+              </div>
+            </div>
+            <button class="log-btn" id="log-btn" disabled onclick="logEntry()">Log this vehicle →</button>
+            <div class="kbd-hint">press <kbd>Enter</kbd> to log · number keys <kbd>1</kbd>–<kbd>9</kbd> set people</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ANALYTICS PANE ── -->
+    <div class="pane" id="pane-ana">
+      <div class="ana-grid" data-container="anagrid">
+
+        <div class="panel ana-full" data-block="ana-headline">
+          <div class="panel-ttl">Visitor multiplier — 95% confidence interval</div>
+          <div id="ana-ci"></div>
+        </div>
+
+        <div class="panel" data-block="ana-converge">
+          <div class="panel-ttl">Convergence</div>
+          <div id="ana-conv-kv"></div>
+          <div id="ana-conv-chart"></div>
+          <div class="chart-note">Margin of error shrinks with the square root of sample size, so each halving of the margin needs about four times the vehicles.</div>
+        </div>
+
+        <div class="panel" data-block="ana-running">
+          <div class="panel-ttl">Running mean &amp; CI band</div>
+          <div id="ana-run-chart"></div>
+          <div class="legend"><span><i style="background:#D9A441"></i>running mean</span><span><i style="background:rgba(217,164,65,.28)"></i>95% CI</span></div>
+        </div>
+
+        <div class="panel" data-block="ana-compare">
+          <div class="panel-ttl">New arrivals vs returning campers</div>
+          <div id="ana-cmp"></div>
+          <div class="chart-note">Two separate populations — returning campers are never mixed into the new-arrival multiplier.</div>
+        </div>
+
+        <div class="panel" data-block="ana-hourly">
+          <div class="panel-ttl">Arrivals by hour</div>
+          <div id="ana-hour-chart"></div>
+          <div class="legend"><span><i style="background:#D9A441"></i>new</span><span><i style="background:#C2693F"></i>returning</span></div>
+        </div>
+
+        <div class="panel" data-block="ana-forecast">
+          <div class="panel-ttl">Projection</div>
+          <div id="ana-fc"></div>
+          <div class="chart-note">Straight-line extrapolation from the observed arrival rate. Treat as a rough planning figure, not a forecast — arrival rates swing with weather and time of day.</div>
+        </div>
+
       </div>
     </div>
 
@@ -403,132 +495,60 @@ textarea:focus{border-color:var(--amber)}
   </div>
 </div>
 
-<!-- ════ DEVELOPER MODE ════ -->
+<!-- ════ DEV PASSCODE ════ -->
 <div class="dev-overlay" id="dev-overlay">
   <div class="dev-modal">
     <div class="dev-head">
       <span class="dev-ttl">Developer mode</span>
       <button class="dev-x" onclick="closeDev()">✕</button>
     </div>
-
-    <div id="dev-lock">
-      <div class="dev-note">Locked. Enter the passcode to add or remove vehicle types, passes, and activities, or to hide sections you don't use.</div>
-      <input id="dev-code" type="password" inputmode="numeric" maxlength="8" placeholder="••••" autocomplete="off">
-      <div class="dev-err" id="dev-err"></div>
-      <button class="dev-primary" onclick="unlockDev()">Unlock</button>
-    </div>
-
-    <div id="dev-body" class="hidden">
-      <div class="dev-note">Changes save instantly and stick on this device. Use this to add a one-off option — a night interpreter program, a music venue event — without touching the code.</div>
-
-      <div class="dev-sec">
-        <div class="dev-sec-ttl">Activities</div>
-        <div id="dev-activities"></div>
-        <div class="dev-add">
-          <input id="add-activities" type="text" placeholder="e.g. Night Interpreter Program" autocomplete="off">
-          <button onclick="devAdd('activities')">Add</button>
-        </div>
-      </div>
-
-      <div class="dev-sec">
-        <div class="dev-sec-ttl">Passes</div>
-        <div id="dev-passes"></div>
-        <div class="dev-add">
-          <input id="add-passes" type="text" placeholder="e.g. Group Reservation" autocomplete="off">
-          <button onclick="devAdd('passes')">Add</button>
-        </div>
-      </div>
-
-      <div class="dev-sec">
-        <div class="dev-sec-ttl">Vehicle types</div>
-        <div id="dev-vehicles"></div>
-        <div class="dev-add">
-          <input id="add-vehicles" type="text" placeholder="e.g. Shuttle" autocomplete="off">
-          <button onclick="devAdd('vehicles')">Add</button>
-        </div>
-      </div>
-
-      <div class="dev-sec">
-        <div class="dev-sec-ttl">Show / hide sections</div>
-        <label class="dev-tg"><input type="checkbox" id="tg-vehicle" onchange="devToggle('vehicle',this.checked)"> Vehicle type row</label>
-        <label class="dev-tg"><input type="checkbox" id="tg-returning" onchange="devToggle('returning',this.checked)"> Returning button</label>
-        <label class="dev-tg"><input type="checkbox" id="tg-passes" onchange="devToggle('passes',this.checked)"> Passes row</label>
-        <label class="dev-tg"><input type="checkbox" id="tg-activity" onchange="devToggle('activity',this.checked)"> Activity row</label>
-        <label class="dev-tg"><input type="checkbox" id="tg-notes" onchange="devToggle('notes',this.checked)"> Notes box</label>
-        <label class="dev-tg"><input type="checkbox" id="tg-weather" onchange="devToggle('weather',this.checked)"> Weather strip</label>
-      </div>
-
-      <button class="dev-reset" onclick="devReset()">Reset everything to defaults</button>
-      <button class="dev-done" onclick="closeDev()">Done</button>
-    </div>
+    <div class="dev-note">Unlocks live editing of the dashboard itself — reorder or hide any panel, stat card or form row, and add, rename or delete chips right where they sit.</div>
+    <input id="dev-code" type="password" inputmode="numeric" maxlength="8" placeholder="••••" autocomplete="off">
+    <div class="dev-err" id="dev-err"></div>
+    <button class="dev-primary" onclick="unlockDev()">Unlock</button>
   </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════════════════════════
-   Virginia State Parks — full system roster (44 official parks +
-   2 administered properties). Coordinates are park-level, used only
-   to pull weather from Open-Meteo for the selected park.
-   ══════════════════════════════════════════════════════════════ */
+/* ══════════ VIRGINIA STATE PARKS ══════════ */
 const PARKS={
-  'Bear Creek Lake':{lat:37.5289,lon:-78.2733},
-  'Belle Isle':{lat:37.7649,lon:-76.5906},
-  'Breaks Interstate':{lat:37.2942,lon:-82.2916},
-  'Caledon':{lat:38.3418,lon:-77.0765},
-  'Chippokes':{lat:37.1443,lon:-76.7360},
-  'Claytor Lake':{lat:37.0560,lon:-80.6260},
-  'Clinch River':{lat:36.9040,lon:-82.3130},
-  'Culpeper Battlefields':{lat:38.4730,lon:-77.9060},
-  'Douthat':{lat:37.9043,lon:-79.8055},
-  'Fairy Stone':{lat:36.7830,lon:-80.1030},
-  'Falling Spring Falls':{lat:37.8770,lon:-79.9420},
-  'False Cape':{lat:36.7396,lon:-75.9569},
-  'First Landing':{lat:36.9004,lon:-76.0100},
-  'Grayson Highlands':{lat:36.6384,lon:-81.4960},
-  'Green Pastures':{lat:37.7940,lon:-79.9130},
-  'Hayfields':{lat:38.3600,lon:-79.5700},
-  'High Bridge Trail':{lat:37.3010,lon:-78.3960},
-  'Holliday Lake':{lat:37.3970,lon:-78.6390},
-  'Hungry Mother':{lat:36.8915,lon:-81.5365},
-  'James River':{lat:37.6180,lon:-78.7860},
-  'Kiptopeke':{lat:37.1680,lon:-75.9912},
-  'Lake Anna':{lat:38.0982,lon:-77.7975},
-  'Leesylvania':{lat:38.5659,lon:-77.2053},
-  'Machicomoco':{lat:37.3820,lon:-76.4870},
-  'Mason Neck':{lat:38.6319,lon:-77.1653},
-  'Natural Bridge':{lat:37.6282,lon:-79.5431},
-  'Natural Tunnel':{lat:36.7040,lon:-82.7460},
-  'New River Trail':{lat:36.8790,lon:-80.8730},
-  'Occoneechee':{lat:36.6360,lon:-78.5230},
-  'Pocahontas':{lat:37.3837,lon:-77.5886},
-  'Powhatan':{lat:37.6870,lon:-77.9560},
-  "Sailor's Creek Battlefield":{lat:37.3320,lon:-78.2350},
-  'Seven Bends':{lat:38.8890,lon:-78.5200},
-  'Shenandoah River (Andy Guest)':{lat:38.9279,lon:-78.3228},
-  'Shot Tower':{lat:36.8720,lon:-80.9640},
-  'Sky Meadows':{lat:38.9880,lon:-77.9700},
-  'Smith Mountain Lake':{lat:37.0326,lon:-79.6646},
-  'Southwest Virginia Museum':{lat:36.8690,lon:-82.7800},
-  'Staunton River':{lat:36.6930,lon:-78.6690},
-  'Staunton River Battlefield':{lat:36.9930,lon:-78.7020},
-  'Sweet Run':{lat:39.2560,lon:-77.6180},
-  'Twin Lakes':{lat:37.1750,lon:-78.2700},
-  'Westmoreland':{lat:38.1584,lon:-76.8641},
-  'Widewater':{lat:38.4230,lon:-77.3860},
-  'Wilderness Road':{lat:36.6270,lon:-83.4470},
-  'York River':{lat:37.3974,lon:-76.5861}
+  'Bear Creek Lake':{lat:37.5289,lon:-78.2733},'Belle Isle':{lat:37.7649,lon:-76.5906},
+  'Breaks Interstate':{lat:37.2942,lon:-82.2916},'Caledon':{lat:38.3418,lon:-77.0765},
+  'Chippokes':{lat:37.1443,lon:-76.7360},'Claytor Lake':{lat:37.0560,lon:-80.6260},
+  'Clinch River':{lat:36.9040,lon:-82.3130},'Culpeper Battlefields':{lat:38.4730,lon:-77.9060},
+  'Douthat':{lat:37.9043,lon:-79.8055},'Fairy Stone':{lat:36.7830,lon:-80.1030},
+  'Falling Spring Falls':{lat:37.8770,lon:-79.9420},'False Cape':{lat:36.7396,lon:-75.9569},
+  'First Landing':{lat:36.9004,lon:-76.0100},'Grayson Highlands':{lat:36.6384,lon:-81.4960},
+  'Green Pastures':{lat:37.7940,lon:-79.9130},'Hayfields':{lat:38.3600,lon:-79.5700},
+  'High Bridge Trail':{lat:37.3010,lon:-78.3960},'Holliday Lake':{lat:37.3970,lon:-78.6390},
+  'Hungry Mother':{lat:36.8915,lon:-81.5365},'James River':{lat:37.6180,lon:-78.7860},
+  'Kiptopeke':{lat:37.1680,lon:-75.9912},'Lake Anna':{lat:38.0982,lon:-77.7975},
+  'Leesylvania':{lat:38.5659,lon:-77.2053},'Machicomoco':{lat:37.3820,lon:-76.4870},
+  'Mason Neck':{lat:38.6319,lon:-77.1653},'Natural Bridge':{lat:37.6282,lon:-79.5431},
+  'Natural Tunnel':{lat:36.7040,lon:-82.7460},'New River Trail':{lat:36.8790,lon:-80.8730},
+  'Occoneechee':{lat:36.6360,lon:-78.5230},'Pocahontas':{lat:37.3837,lon:-77.5886},
+  'Powhatan':{lat:37.6870,lon:-77.9560},"Sailor's Creek Battlefield":{lat:37.3320,lon:-78.2350},
+  'Seven Bends':{lat:38.8890,lon:-78.5200},'Shenandoah River (Andy Guest)':{lat:38.9279,lon:-78.3228},
+  'Shot Tower':{lat:36.8720,lon:-80.9640},'Sky Meadows':{lat:38.9880,lon:-77.9700},
+  'Smith Mountain Lake':{lat:37.0326,lon:-79.6646},'Southwest Virginia Museum':{lat:36.8690,lon:-82.7800},
+  'Staunton River':{lat:36.6930,lon:-78.6690},'Staunton River Battlefield':{lat:36.9930,lon:-78.7020},
+  'Sweet Run':{lat:39.2560,lon:-77.6180},'Twin Lakes':{lat:37.1750,lon:-78.2700},
+  'Westmoreland':{lat:38.1584,lon:-76.8641},'Widewater':{lat:38.4230,lon:-77.3860},
+  'Wilderness Road':{lat:36.6270,lon:-83.4470},'York River':{lat:37.3974,lon:-76.5861}
 };
 
-/* ══ EDITABLE CONFIG — everything below can be changed in Developer mode ══ */
+/* ══════════ EDITABLE CONFIG ══════════ */
 const DEFAULT_CONFIG={
   vehicles:['Car/SUV','Truck','Motorcycle','RV/Camper','Boat Trailer','Bus/Van','Other'],
   passes:['Day Pass','Camping','Annual','Life','Veteran','Handicap','Entry Coupon','Staff','Delivery'],
   activities:['Day Use','Hiking','Biking','Camping/Cabin','Boat','Pool'],
-  show:{vehicle:true,returning:true,passes:true,activity:true,notes:true,weather:true}
+  blocks:{}
 };
-const CONFIG_KEY='parkcount_config_v1';
+const CONFIG_KEY='parkcount_config_v2';
 const DEV_PASSCODE='1234';
+const TARGET_MOE=0.10;
 let CONFIG=loadConfig();
+let devEdit=false, testMode=false, activeTab='log';
 
 function loadConfig(){
   try{
@@ -539,183 +559,240 @@ function loadConfig(){
       vehicles:(Array.isArray(c.vehicles)&&c.vehicles.length)?c.vehicles:[...DEFAULT_CONFIG.vehicles],
       passes:Array.isArray(c.passes)?c.passes:[...DEFAULT_CONFIG.passes],
       activities:(Array.isArray(c.activities)&&c.activities.length)?c.activities:[...DEFAULT_CONFIG.activities],
-      show:Object.assign({},DEFAULT_CONFIG.show,c.show||{})
+      blocks:(c.blocks&&typeof c.blocks==='object')?c.blocks:{}
     };
   }catch(e){ return JSON.parse(JSON.stringify(DEFAULT_CONFIG)); }
 }
 function saveConfig(){ try{ localStorage.setItem(CONFIG_KEY,JSON.stringify(CONFIG)); }catch(e){} }
 function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
-const CSV_HEADER=['Entry #','Date','Time','Park','Observer (initials)','Vehicle Type','People in Vehicle','Returning Campers','Net New People','Passes','Primary Activity','Sky','Precipitation','Temp (°F)','Humidity (%)','Cloud Cover (%)','Wind','Notes'];
+const CSV_HEADER=['Entry #','Date','Time','Park','Observer (initials)','Vehicle Type','People in Vehicle','Returning Camper?','New Visitors','Returning Visitors','Passes','Primary Activity','Sky','Precipitation','Temp (°F)','Humidity (%)','Cloud Cover (%)','Wind','Notes'];
 const FS_SUPPORTED=('showSaveFilePicker' in window)&&window.isSecureContext;
 
-let sess={park:'',initials:'',lat:null,lon:null,accuracy:null,locSource:null,wx:null,wxAt:null,fileHandle:null,liveMode:false};
-let entries=[],curPpl=1,curReturning=false,curPasses=[],curAct=null,curVtype=null;
-let totalPpl=0,totalReturn=0;
+let sess={park:'',initials:'',lat:null,lon:null,wx:null,wxAt:null,fileHandle:null,liveMode:false};
+let entries=[],curPpl=1,curRet=false,curPasses=[],curAct=null,curVtype=null;
 let wxTimer=null;
 
-/* ══ autosave: crash-recovery backup so double-click / offline use never loses data ══ */
-const STORAGE_KEY='parkcount_autosave_v1';
+/* ══════════ AUTOSAVE ══════════ */
+const STORAGE_KEY='parkcount_autosave_v2';
 function saveState(){
-  try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      park:sess.park, initials:sess.initials, lat:sess.lat, lon:sess.lon,
-      entries, totalPpl, totalReturn, savedAt:Date.now()
-    }));
-  }catch(e){}
+  if(testMode) return;
+  try{ localStorage.setItem(STORAGE_KEY,JSON.stringify({park:sess.park,initials:sess.initials,lat:sess.lat,lon:sess.lon,entries,savedAt:Date.now()})); }catch(e){}
 }
-function loadState(){
-  try{ const raw=localStorage.getItem(STORAGE_KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; }
-}
+function loadState(){ try{ const r=localStorage.getItem(STORAGE_KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
 function clearState(){ try{ localStorage.removeItem(STORAGE_KEY); }catch(e){} }
 function maybeShowRestore(){
   const s=loadState();
   if(!s||!s.entries||!s.entries.length) return;
-  const when=new Date(s.savedAt);
   const ago=Math.round((Date.now()-s.savedAt)/60000);
-  const agoTxt = ago<1?'just now':ago<60?ago+' min ago':Math.floor(ago/60)+'h ago';
+  const agoTxt=ago<1?'just now':ago<60?ago+' min ago':Math.floor(ago/60)+'h ago';
   document.getElementById('restore-sub').textContent=
-    `${s.park||'Unknown park'} · ${s.entries.length} vehicle${s.entries.length===1?'':'s'} · last saved ${agoTxt} (${when.toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'})}). Resume to keep logging into the same tally.`;
+    `${s.park||'Unknown park'} · ${s.entries.length} vehicle${s.entries.length===1?'':'s'} · last saved ${agoTxt}. Resume to keep logging into the same tally.`;
   document.getElementById('restore-banner').classList.add('show');
 }
-function dismissRestore(){
-  clearState();
-  document.getElementById('restore-banner').classList.remove('show');
-}
+function dismissRestore(){ clearState(); document.getElementById('restore-banner').classList.remove('show'); }
 function restoreSession(){
-  const s=loadState();
-  if(!s){ dismissRestore(); return; }
-  sess.park=s.park; sess.initials=s.initials||'—'; sess.lat=s.lat; sess.lon=s.lon; sess.locSource='park';
-  entries=s.entries||[]; totalPpl=s.totalPpl||0; totalReturn=s.totalReturn||0;
+  const s=loadState(); if(!s){ dismissRestore(); return; }
+  sess.park=s.park; sess.initials=s.initials||'—'; sess.lat=s.lat; sess.lon=s.lon;
+  entries=s.entries||[];
   document.getElementById('restore-banner').classList.remove('show');
-  document.getElementById('h-park').textContent=(sess.park||'Park')+' State Park';
-  document.getElementById('h-loc').textContent=sess.lat?`${sess.lat.toFixed(4)}, ${sess.lon.toFixed(4)} (fixed park coordinates)`:'—';
-  document.getElementById('setup').classList.remove('active');
-  document.getElementById('dash').classList.add('active');
-  updateClock(); setInterval(updateClock,1000);
-  refreshWeather(); scheduleWxRefresh();
-  resetForm();
-  updateStats(); drawRing(); renderActBars(); renderPassBars(); renderEntries();
-  sess.liveMode=false; updateLiveBadge(); updateFooter();
+  enterDashboard();
+  refreshWeather();
 }
 
-/* ── populate park dropdown ── */
-(function fillParks(){
+/* ══════════ PARK DROPDOWN ══════════ */
+(function(){
   const sel=document.getElementById('park-sel');
-  Object.keys(PARKS).forEach(name=>{
-    const o=document.createElement('option'); o.textContent=name; sel.appendChild(o);
-  });
+  Object.keys(PARKS).forEach(n=>{ const o=document.createElement('option'); o.textContent=n; sel.appendChild(o); });
 })();
 
-/* ── build chip rows from CONFIG (re-runs whenever dev mode edits things) ── */
+/* ══════════ CHIPS (rebuilt from CONFIG; editable in dev mode) ══════════ */
+function chipHtml(kind,v,i,cls){
+  const x = devEdit ? `<span class="chip-x" onclick="event.stopPropagation();devRemoveItem('${kind}',${i})">✕</span>` : '';
+  return `<button class="chip ${cls}" data-v="${esc(v)}" onclick="chipTap('${kind}',this,${i})">${esc(v)}${x}</button>`;
+}
 function renderChipRows(){
   document.getElementById('vtype-wrap').innerHTML=
-    CONFIG.vehicles.map(v=>`<button class="chip" data-v="${esc(v)}" onclick="selVtype(this)">${esc(v)}</button>`).join('');
+    CONFIG.vehicles.map((v,i)=>chipHtml('vehicles',v,i,'')).join('')+
+    (devEdit?`<button class="chip chip-add" onclick="devAddPrompt('vehicles')">＋ add</button>`:'');
   document.getElementById('pass-wrap').innerHTML=
-    `<button class="chip pass-none" data-v="None" onclick="selPass(this)">None</button>`+
-    CONFIG.passes.map(p=>`<button class="chip pass-tag" data-v="${esc(p)}" onclick="selPass(this)">${esc(p)}</button>`).join('');
+    `<button class="chip pass-none" data-v="None" onclick="chipTap('none',this,-1)">None</button>`+
+    CONFIG.passes.map((v,i)=>chipHtml('passes',v,i,'pass-tag')).join('')+
+    (devEdit?`<button class="chip chip-add" onclick="devAddPrompt('passes')">＋ add</button>`:'');
   document.getElementById('act-wrap').innerHTML=
-    CONFIG.activities.map(a=>`<button class="chip" data-v="${esc(a)}" onclick="selAct(this)">${esc(a)}</button>`).join('');
-  applySectionVisibility();
+    CONFIG.activities.map((v,i)=>chipHtml('activities',v,i,'')).join('')+
+    (devEdit?`<button class="chip chip-add" onclick="devAddPrompt('activities')">＋ add</button>`:'');
 }
-function applySectionVisibility(){
-  const set=(id,on)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('hidden',!on); };
-  set('row-vehicle',CONFIG.show.vehicle);
-  set('ret-btn',CONFIG.show.returning);
-  set('row-passes',CONFIG.show.passes);
-  set('row-activity',CONFIG.show.activity);
-  set('notes',CONFIG.show.notes);
-  set('wx-strip',CONFIG.show.weather);
-  set('panel-act',CONFIG.show.activity);
-  set('panel-pass',CONFIG.show.passes);
+function chipTap(kind,btn,i){
+  if(devEdit){
+    if(kind==='none'){ alert('The "None" pass chip is built in and cannot be edited.'); return; }
+    devRenamePrompt(kind,i); return;
+  }
+  if(kind==='vehicles') selVtype(btn);
+  else if(kind==='passes'||kind==='none') selPass(btn);
+  else selAct(btn);
 }
 
-/* ── weather/location helpers ── */
-function mapWMO(code,precipAmt){
+/* ══════════ BLOCK LAYOUT (dev mode reorder / hide) ══════════ */
+function ensureBlockCfg(){
+  document.querySelectorAll('[data-container]').forEach(cont=>{
+    [...cont.children].filter(el=>el.hasAttribute('data-block')).forEach((el,i)=>{
+      const id=el.dataset.block;
+      if(!CONFIG.blocks[id]) CONFIG.blocks[id]={v:true,o:i};
+    });
+  });
+}
+function applyLayout(){
+  document.querySelectorAll('[data-container]').forEach(cont=>{
+    const kids=[...cont.children].filter(el=>el.hasAttribute('data-block'));
+    kids.sort((a,b)=>(CONFIG.blocks[a.dataset.block]?.o??0)-(CONFIG.blocks[b.dataset.block]?.o??0));
+    kids.forEach(k=>{
+      cont.appendChild(k);
+      k.classList.toggle('blk-hidden',!(CONFIG.blocks[k.dataset.block]?.v));
+    });
+  });
+}
+function renderBlockControls(){
+  document.querySelectorAll('.blk-ctl').forEach(e=>e.remove());
+  if(!devEdit) return;
+  document.querySelectorAll('[data-block]').forEach(el=>{
+    const id=el.dataset.block, cfg=CONFIG.blocks[id]; if(!cfg) return;
+    const bar=document.createElement('div');
+    bar.className='blk-ctl';
+    bar.innerHTML=`<button onclick="blkMove('${id}',-1)" title="Move up">↑</button>`+
+                  `<button onclick="blkMove('${id}',1)" title="Move down">↓</button>`+
+                  `<button class="${cfg.v?'':'off'}" onclick="blkToggle('${id}')" title="Show / hide">${cfg.v?'👁':'🚫'}</button>`;
+    el.appendChild(bar);
+  });
+}
+function blkMove(id,d){
+  const el=document.querySelector(`[data-block="${id}"]`); if(!el) return;
+  const cont=el.parentElement;
+  const kids=[...cont.children].filter(x=>x.hasAttribute('data-block'))
+    .sort((a,b)=>CONFIG.blocks[a.dataset.block].o-CONFIG.blocks[b.dataset.block].o);
+  const i=kids.indexOf(el), j=i+d;
+  if(j<0||j>=kids.length) return;
+  const A=CONFIG.blocks[kids[i].dataset.block], B=CONFIG.blocks[kids[j].dataset.block];
+  const t=A.o; A.o=B.o; B.o=t;
+  saveConfig(); applyLayout(); renderBlockControls();
+}
+function blkToggle(id){
+  CONFIG.blocks[id].v=!CONFIG.blocks[id].v;
+  saveConfig(); applyLayout(); renderBlockControls(); chkReady();
+}
+
+/* ══════════ DEV MODE ══════════ */
+function openDev(){
+  document.getElementById('dev-overlay').classList.add('show');
+  document.getElementById('dev-code').value='';
+  document.getElementById('dev-err').textContent='';
+  setTimeout(()=>document.getElementById('dev-code').focus(),50);
+}
+function closeDev(){ document.getElementById('dev-overlay').classList.remove('show'); }
+function unlockDev(){
+  if(document.getElementById('dev-code').value.trim()===DEV_PASSCODE){
+    closeDev(); enterDevEdit();
+  }else{
+    document.getElementById('dev-err').textContent='Incorrect passcode.';
+    document.getElementById('dev-code').value='';
+  }
+}
+function enterDevEdit(){
+  devEdit=true;
+  document.body.classList.add('dev-on');
+  if(!document.getElementById('dash').classList.contains('active')) enterDashboard();
+  renderChipRows(); applyLayout(); renderBlockControls();
+}
+function exitDevEdit(){
+  devEdit=false;
+  document.body.classList.remove('dev-on');
+  document.querySelectorAll('.blk-ctl').forEach(e=>e.remove());
+  renderChipRows(); resetForm(); applyLayout();
+}
+function devCommit(){
+  saveConfig(); renderChipRows(); applyLayout(); renderBlockControls();
+  renderActBars(); renderPassBars(); chkReady();
+}
+function devAddPrompt(kind){
+  const v=prompt(`Add a new ${kind.replace(/s$/,'')}:`);
+  if(v===null) return;
+  const t=v.trim(); if(!t) return;
+  if(CONFIG[kind].some(x=>x.toLowerCase()===t.toLowerCase())){ alert(`"${t}" already exists.`); return; }
+  CONFIG[kind].push(t); devCommit();
+}
+function devRenamePrompt(kind,i){
+  const cur=CONFIG[kind][i];
+  const v=prompt(`Rename "${cur}" — or clear the box and press OK to delete it:`,cur);
+  if(v===null) return;
+  const t=v.trim();
+  if(!t){ CONFIG[kind].splice(i,1); devCommit(); return; }
+  if(CONFIG[kind].some((x,j)=>j!==i&&x.toLowerCase()===t.toLowerCase())){ alert(`"${t}" already exists.`); return; }
+  CONFIG[kind][i]=t; devCommit();
+}
+function devRemoveItem(kind,i){ CONFIG[kind].splice(i,1); devCommit(); }
+function devReset(){
+  if(!confirm('Reset every chip list and put all panels back where they started?')) return;
+  CONFIG=JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+  CONFIG.blocks={}; ensureBlockCfg(); devCommit();
+}
+
+/* ══════════ WEATHER ══════════ */
+function mapWMO(code,amt){
   let sky='Clear',precip='None';
-  if(code===0) sky='Clear';
-  else if(code<=2) sky='Partly Cloudy';
-  else if(code===3) sky='Overcast';
-  else if(code<=48){sky='Overcast';precip='Fog';}
-  else sky='Cloudy';
+  if(code===0) sky='Clear'; else if(code<=2) sky='Partly Cloudy';
+  else if(code===3) sky='Overcast'; else if(code<=48){sky='Overcast';precip='Fog';} else sky='Cloudy';
   if((code>=51&&code<=57)||code===61||code===66) precip='Light Rain';
   else if(code===63||code===65||code===67) precip='Rain';
   else if(code===82||code===99) precip='Heavy Rain';
   else if((code>=80&&code<=81)||(code>=95&&code<=98)) precip='Rain';
   else if((code>=71&&code<=77)||code===85||code===86) precip='Snow';
-  if(precipAmt<=0&&!['Fog','None'].includes(precip)) precip='None';
+  if(amt<=0&&!['Fog','None'].includes(precip)) precip='None';
   return{sky,precip};
 }
-function degToCompass(deg){
-  const dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
-  return dirs[Math.round(deg/22.5)%16];
-}
+function degToCompass(d){ return ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'][Math.round(d/22.5)%16]; }
 function haversine(la1,lo1,la2,lo2){
   const R=3959,dLa=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180;
   const a=Math.sin(dLa/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 function nearestPark(lat,lon){
-  let best=null,bestD=Infinity;
-  for(const[n,c] of Object.entries(PARKS)){
-    const d=haversine(lat,lon,c.lat,c.lon);
-    if(d<bestD){bestD=d;best=n;}
-  }
+  let best=null,bd=Infinity;
+  for(const[n,c] of Object.entries(PARKS)){ const d=haversine(lat,lon,c.lat,c.lon); if(d<bd){bd=d;best=n;} }
   return best;
 }
 async function fetchWx(lat,lon){
   const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m&temperature_unit=fahrenheit&precipitation_unit=inch&wind_speed_unit=mph`;
-  const r=await fetch(url);
-  if(!r.ok) throw new Error('API error');
-  const d=await r.json();
-  const c=d.current;
+  const r=await fetch(url); if(!r.ok) throw new Error('API error');
+  const c=(await r.json()).current;
   const{sky,precip}=mapWMO(c.weather_code,c.precipitation);
-  return{
-    temp:Math.round(c.temperature_2m),
-    humidity:Math.round(c.relative_humidity_2m),
-    sky,precip,
-    cloud:Math.round(c.cloud_cover),
-    wind:`${Math.round(c.wind_speed_10m)} mph ${degToCompass(c.wind_direction_10m)}`
-  };
+  return{temp:Math.round(c.temperature_2m),humidity:Math.round(c.relative_humidity_2m),sky,precip,
+    cloud:Math.round(c.cloud_cover),wind:`${Math.round(c.wind_speed_10m)} mph ${degToCompass(c.wind_direction_10m)}`};
 }
-function setStatus(msg,cls){
-  const el=document.getElementById('status-ln');
-  el.textContent=msg; el.className='status-ln '+(cls||'');
-}
+function setStatus(m,c){ const el=document.getElementById('status-ln'); el.textContent=m; el.className='status-ln '+(c||''); }
 function getWeekendLabel(date){
-  const d=new Date(date);
-  const day=d.getDay();
-  const diff=(day-4+7)%7;
+  const d=new Date(date),day=d.getDay(),diff=(day-4+7)%7;
   const thu=new Date(d); thu.setDate(d.getDate()-diff);
   const sun=new Date(thu); sun.setDate(thu.getDate()+3);
-  const fmt=x=>String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
-  return `${fmt(thu)}_to_${fmt(sun)}`;
+  const f=x=>String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+  return `${f(thu)}_to_${f(sun)}`;
 }
-
 function onParkChange(){
-  const sel=document.getElementById('park-sel');
-  const has=!!sel.value;
+  const sel=document.getElementById('park-sel'), has=!!sel.value;
   document.getElementById('opt-new').disabled=!has;
   document.getElementById('opt-import').disabled=!has;
   document.getElementById('gate-note').classList.toggle('hidden',has);
   if(has){
     const p=sel.value;
     document.getElementById('opt-new-sub').textContent=`${p}, ${getWeekendLabel(new Date())}`;
-    const coords=PARKS[p];
-    if(coords){
-      sess.lat=coords.lat; sess.lon=coords.lon; sess.locSource='park';
-      loadWeatherPreview(`Fetching weather for ${p}…`, `Weather locked in for ${p}`);
-    }
+    const c=PARKS[p];
+    if(c){ sess.lat=c.lat; sess.lon=c.lon; loadWeatherPreview(`Fetching weather for ${p}…`,`Weather locked in for ${p}`); }
   }
   checkStartReady();
 }
-const PARK_MATCH_ACCURACY_LIMIT_M=8000;
-
-async function loadWeatherPreview(loadingMsg,okMsg){
-  setStatus(loadingMsg);
+async function loadWeatherPreview(loading,ok){
+  setStatus(loading);
   try{
-    const wx=await fetchWx(sess.lat,sess.lon);
-    sess.wx=wx;
+    const wx=await fetchWx(sess.lat,sess.lon); sess.wx=wx;
     document.getElementById('p-sky').textContent=wx.sky;
     document.getElementById('p-temp').textContent=wx.temp+'°';
     document.getElementById('p-pr').textContent=wx.precip;
@@ -723,47 +800,38 @@ async function loadWeatherPreview(loadingMsg,okMsg){
     document.getElementById('p-wind').textContent=wx.wind;
     document.getElementById('p-hum').textContent=wx.humidity+'%';
     document.getElementById('wx-prev').classList.add('show');
-    setStatus(okMsg,'ok');
+    setStatus(ok,'ok');
   }catch(e){ setStatus('Weather fetch failed — check connection','err'); }
 }
-
 async function detectLocation(){
   if(!navigator.geolocation){setStatus('GPS not available on this device','err');return;}
-  const btn=document.getElementById('locate-btn');
-  btn.disabled=true;
+  const btn=document.getElementById('locate-btn'); btn.disabled=true;
   setStatus('Checking your device location to suggest a park…');
   navigator.geolocation.getCurrentPosition((pos)=>{
-    const devAccuracy=Math.round(pos.coords.accuracy);
-    if(devAccuracy<=PARK_MATCH_ACCURACY_LIMIT_M){
+    const acc=Math.round(pos.coords.accuracy);
+    if(acc<=8000){
       const near=nearestPark(pos.coords.latitude,pos.coords.longitude);
-      if(near){
-        document.getElementById('park-sel').value=near;
-        onParkChange();
-        setStatus(`Device location matched to ${near} (±${devAccuracy}m) — using ${near}'s known coordinates for weather`,'ok');
-      }
-    }else{
-      setStatus(`Device location too coarse (±${devAccuracy}m) to guess your park — please select it manually below`,'err');
-    }
+      if(near){ document.getElementById('park-sel').value=near; onParkChange();
+        setStatus(`Matched to ${near} (±${acc}m) — using ${near}'s known coordinates`,'ok'); }
+    }else setStatus(`Device location too coarse (±${acc}m) — please select your park manually`,'err');
     btn.disabled=false;
-  },()=>{ setStatus('Location denied — no problem, just select your park manually below','err'); btn.disabled=false; },
+  },()=>{ setStatus('Location denied — just select your park manually below','err'); btn.disabled=false; },
   {enableHighAccuracy:true,timeout:12000});
 }
 
-/* ── universal CSV parser ── */
+/* ══════════ CSV ══════════ */
 function parseCsv(text){
   text=text.replace(/^﻿/,'');
-  const rows=[]; let row=[]; let cur=''; let inQuotes=false;
+  const rows=[]; let row=[],cur='',q=false;
   for(let i=0;i<text.length;i++){
     const c=text[i];
-    if(inQuotes){
-      if(c==='"'){ if(text[i+1]==='"'){ cur+='"'; i++; } else { inQuotes=false; } }
-      else { cur+=c; }
-    }else{
-      if(c==='"'){ inQuotes=true; }
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else{
+      if(c==='"') q=true;
       else if(c===','){ row.push(cur); cur=''; }
-      else if(c==='\r'){ }
+      else if(c==='\r'){}
       else if(c==='\n'){ row.push(cur); cur=''; rows.push(row); row=[]; }
-      else { cur+=c; }
+      else cur+=c;
     }
   }
   if(cur.length||row.length){ row.push(cur); rows.push(row); }
@@ -771,188 +839,159 @@ function parseCsv(text){
 }
 function normKey(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,''); }
 const FIELD_ALIASES={
-  date:['date'], time:['time'], park:['park'],
-  observer:['observerinitials','observer'],
-  vtype:['vehicletype','vehicle'],
-  people:['peopleinvehicle','people'],
-  returning:['returningcampers','returning'],
-  netnew:['netnewpeople','netnew'],
-  passes:['passes'],
-  passOld:['parkingpass','pass'],
+  date:['date'],time:['time'],park:['park'],observer:['observerinitials','observer'],
+  vtype:['vehicletype','vehicle'],people:['peopleinvehicle','people'],
+  retflag:['returningcamper'],
+  newvis:['newvisitors','netnewpeople','netnew'],
+  retvis:['returningvisitors','returningcampers'],
+  passes:['passes'],passOld:['parkingpass','pass'],
   activity:['primaryactivity','activity','entrypurpose','purpose'],
-  sky:['sky'], precip:['precipitation','precip'],
-  temp:['tempf','temp'], humidity:['humiditypct','humidity'],
-  cloud:['cloudcoverpct','cloudcover','cloud'],
-  wind:['wind'], notes:['notes']
+  sky:['sky'],precip:['precipitation','precip'],temp:['tempf','temp'],
+  humidity:['humiditypct','humidity'],cloud:['cloudcoverpct','cloudcover','cloud'],
+  wind:['wind'],notes:['notes']
 };
-function buildColMap(headerCells){
-  const norm=headerCells.map(normKey);
-  const map={};
-  for(const[field,aliases] of Object.entries(FIELD_ALIASES)){
-    for(const alias of aliases){
-      const idx=norm.findIndex(n=>n===alias);
-      if(idx!==-1){ map[field]=idx; break; }
-    }
+function buildColMap(h){
+  const n=h.map(normKey),m={};
+  for(const[f,al] of Object.entries(FIELD_ALIASES)){
+    for(const a of al){ const i=n.findIndex(x=>x===a); if(i!==-1){ m[f]=i; break; } }
   }
-  return map;
+  return m;
 }
-function parsePasses(str,oldYesNo){
-  if(str && str.trim()){
-    return str.split(/[;|]/).map(s=>s.trim()).filter(Boolean).filter(s=>s.toLowerCase()!=='none');
-  }
-  if(oldYesNo!==undefined){
-    const v=String(oldYesNo).trim().toLowerCase();
-    if(v==='yes'||v==='y') return ['Pass (unspecified)'];
-  }
+function parsePasses(str,old){
+  if(str&&str.trim()) return str.split(/[;|]/).map(s=>s.trim()).filter(Boolean).filter(s=>s.toLowerCase()!=='none');
+  if(old!==undefined){ const v=String(old).trim().toLowerCase(); if(v==='yes'||v==='y') return ['Pass (unspecified)']; }
   return [];
 }
 function parseAnyLog(text){
   const rows=parseCsv(text);
-  let headerIdx=-1, headerCells=[];
-  for(let i=0;i<rows.length;i++){
-    if(rows[i].length && normKey(rows[i][0])==='entry'){ headerIdx=i; headerCells=rows[i]; break; }
-  }
-  if(headerIdx===-1) throw new Error('No "Entry #" header row found in this file.');
-  const colMap=buildColMap(headerCells);
-  const dataRows=[];
-  for(let i=headerIdx+1;i<rows.length;i++){
+  let hi=-1,hc=[];
+  for(let i=0;i<rows.length;i++){ if(rows[i].length&&normKey(rows[i][0])==='entry'){ hi=i; hc=rows[i]; break; } }
+  if(hi===-1) throw new Error('No "Entry #" header row found in this file.');
+  const cm=buildColMap(hc), out=[];
+  for(let i=hi+1;i<rows.length;i++){
     const r=rows[i];
     if(!r.length||r.every(c=>!c||!c.trim())) break;
-    dataRows.push(r);
+    out.push(r);
   }
-  const get=(r,f,fb)=> (colMap[f]!==undefined && r[colMap[f]]!==undefined && r[colMap[f]]!=='') ? r[colMap[f]] : fb;
-  return dataRows.map((r,i)=>{
-    const people=Number(get(r,'people',1))||1;
-    let returning=Number(get(r,'returning',0)); if(!(returning>=0)) returning=0;
-    returning=Math.min(returning,people);
-    const passes=parsePasses(get(r,'passes',''), colMap.passOld!==undefined?r[colMap.passOld]:undefined);
+  const g=(r,f,fb)=>(cm[f]!==undefined&&r[cm[f]]!==undefined&&r[cm[f]]!=='')?r[cm[f]]:fb;
+  return out.map((r,i)=>{
+    const people=Number(g(r,'people',1))||1;
+    let ret;
+    const rf=g(r,'retflag','');
+    if(rf!==''){ const v=String(rf).trim().toLowerCase(); ret=(v==='yes'||v==='y'||v==='true'||v==='1'); }
+    else { ret=(Number(g(r,'retvis',0))||0)>0; }   /* older files stored a returning count */
     return {
-      num:i+1,
-      date:get(r,'date',''), time:get(r,'time',''), park:get(r,'park',''),
-      observer:get(r,'observer',''), vtype:get(r,'vtype','—'),
-      people, returning, netNew:people-returning,
-      passes, activity:get(r,'activity','Other'),
-      sky:get(r,'sky',''), precip:get(r,'precip',''),
-      temp:get(r,'temp',''), humidity:get(r,'humidity',''), cloud:get(r,'cloud','—'),
-      wind:get(r,'wind','—'), notes:get(r,'notes','')
+      num:i+1,date:g(r,'date',''),time:g(r,'time',''),ts:null,park:g(r,'park',''),
+      observer:g(r,'observer',''),vtype:g(r,'vtype','—'),
+      people,ret,passes:parsePasses(g(r,'passes',''),cm.passOld!==undefined?r[cm.passOld]:undefined),
+      activity:g(r,'activity','Unspecified'),
+      sky:g(r,'sky',''),precip:g(r,'precip',''),temp:g(r,'temp',''),humidity:g(r,'humidity',''),
+      cloud:g(r,'cloud','—'),wind:g(r,'wind','—'),notes:g(r,'notes','')
     };
   });
 }
-
-/* ── CSV write helpers ── */
-function csvLine(arr){
-  return arr.map(v=>`"${String(v===undefined||v===null?'':v).replace(/"/g,'""')}"`).join(',');
-}
+function csvLine(a){ return a.map(v=>`"${String(v===undefined||v===null?'':v).replace(/"/g,'""')}"`).join(','); }
 function passStr(e){ return (e.passes&&e.passes.length)?e.passes.join('; '):'None'; }
 function entryToRow(e){
-  return [e.num,e.date,e.time,e.park,e.observer,e.vtype,e.people,e.returning,e.netNew,passStr(e),e.activity,e.sky,e.precip,e.temp,e.humidity,e.cloud,e.wind,e.notes];
+  return [e.num,e.date,e.time,e.park,e.observer,e.vtype,e.people,e.ret?'Yes':'No',
+    e.ret?0:e.people, e.ret?e.people:0, passStr(e),e.activity,
+    e.sky,e.precip,e.temp,e.humidity,e.cloud,e.wind,e.notes];
 }
 
-/* ── live file ── */
-function showLiveConfirm(msg){
+/* ══════════ LIVE FILE ══════════ */
+function showLiveConfirm(m){
   document.getElementById('live-confirm').classList.add('show');
-  document.getElementById('live-confirm-txt').textContent=msg;
+  document.getElementById('live-confirm-txt').textContent=m;
   checkStartReady();
 }
 async function chooseNewFile(){
   try{
     const park=document.getElementById('park-sel').value;
-    const suggested=`ParkCount_${park.replace(/[^A-Za-z0-9]+/g,'_')}_${getWeekendLabel(new Date())}.csv`;
-    const handle=await window.showSaveFilePicker({
-      suggestedName:suggested,
-      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]
-    });
-    const writable=await handle.createWritable();
-    await writable.write(csvLine(CSV_HEADER)+'\r\n');
-    await writable.close();
-    sess.fileHandle=handle; sess.liveMode=true;
+    const h=await window.showSaveFilePicker({suggestedName:`ParkCount_${park.replace(/[^A-Za-z0-9]+/g,'_')}_${getWeekendLabel(new Date())}.csv`,
+      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]});
+    const w=await h.createWritable(); await w.write(csvLine(CSV_HEADER)+'\r\n'); await w.close();
+    sess.fileHandle=h; sess.liveMode=true;
     document.getElementById('opt-new').classList.add('chosen');
     document.getElementById('opt-import').classList.remove('chosen');
-    showLiveConfirm('Connected → '+handle.name);
+    showLiveConfirm('Connected → '+h.name);
   }catch(e){ if(e.name!=='AbortError') console.error(e); }
 }
 async function importAndContinue(){
   try{
-    const[srcHandle]=await window.showOpenFilePicker({
-      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]
-    });
-    const file=await srcHandle.getFile();
-    const text=await file.text();
-    const imported=parseAnyLog(text);
-
+    const[src]=await window.showOpenFilePicker({types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]});
+    const f=await src.getFile(); const imported=parseAnyLog(await f.text());
     const park=document.getElementById('park-sel').value;
-    const suggested=`ParkCount_${park.replace(/[^A-Za-z0-9]+/g,'_')}_${getWeekendLabel(new Date())}.csv`;
-    const destHandle=await window.showSaveFilePicker({
-      suggestedName:suggested,
-      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]
-    });
-
+    const dest=await window.showSaveFilePicker({suggestedName:`ParkCount_${park.replace(/[^A-Za-z0-9]+/g,'_')}_${getWeekendLabel(new Date())}.csv`,
+      types:[{description:'CSV file',accept:{'text/csv':['.csv']}}]});
     entries=imported.map((e,i)=>({...e,num:i+1,park:e.park||park}));
-    totalPpl=entries.reduce((s,e)=>s+e.netNew,0);
-    totalReturn=entries.reduce((s,e)=>s+e.returning,0);
-
-    const lines=[csvLine(CSV_HEADER),...entries.map(e=>csvLine(entryToRow(e)))];
-    const writable=await destHandle.createWritable();
-    await writable.write(lines.join('\r\n')+'\r\n');
-    await writable.close();
-
-    sess.fileHandle=destHandle; sess.liveMode=true;
+    const w=await dest.createWritable();
+    await w.write([csvLine(CSV_HEADER),...entries.map(e=>csvLine(entryToRow(e)))].join('\r\n')+'\r\n');
+    await w.close();
+    sess.fileHandle=dest; sess.liveMode=true;
     document.getElementById('opt-import').classList.add('chosen');
     document.getElementById('opt-new').classList.remove('chosen');
-    showLiveConfirm(`Imported ${entries.length} rows from ${file.name} → now live in ${destHandle.name}`);
+    showLiveConfirm(`Imported ${entries.length} rows from ${f.name} → now live in ${dest.name}`);
   }catch(e){ if(e.name!=='AbortError'){ console.error(e); alert('Import failed: '+e.message); } }
 }
 function skipLiveFile(){ sess.liveMode=false; checkStartReady(); }
 function checkStartReady(){
-  const parkOk=!!document.getElementById('park-sel').value;
-  const fileOk=sess.liveMode||!FS_SUPPORTED;
-  document.getElementById('start-btn').disabled=!(parkOk&&fileOk);
+  const ok=!!document.getElementById('park-sel').value&&(sess.liveMode||!FS_SUPPORTED);
+  document.getElementById('start-btn').disabled=!ok;
 }
 async function appendLiveRow(e){
   if(!sess.fileHandle) return;
   try{
-    const file=await sess.fileHandle.getFile();
-    const writable=await sess.fileHandle.createWritable({keepExistingData:true});
-    const line=csvLine(entryToRow(e))+'\r\n';
-    await writable.write({type:'write',position:file.size,data:line});
-    await writable.close();
+    const f=await sess.fileHandle.getFile();
+    const w=await sess.fileHandle.createWritable({keepExistingData:true});
+    await w.write({type:'write',position:f.size,data:csvLine(entryToRow(e))+'\r\n'});
+    await w.close();
     sess.lastSaveOk=true; sess.lastSaveTime=new Date();
   }catch(err){ sess.lastSaveOk=false; console.error('live save failed',err); }
   updateLiveBadge();
 }
 function updateLiveBadge(){
-  const el=document.getElementById('foot-live');
-  const txt=document.getElementById('foot-live-txt');
-  if(!sess.liveMode){
-    el.className='foot-live off'; txt.textContent='auto-saved in browser · export to keep a CSV';
-  }else if(sess.lastSaveOk===false){
-    el.className='foot-live off'; txt.textContent='live save failed — check file access';
-  }else{
+  const el=document.getElementById('foot-live'), t=document.getElementById('foot-live-txt');
+  if(testMode){ el.className='foot-live off'; t.textContent='test mode — nothing saved'; return; }
+  if(!sess.liveMode){ el.className='foot-live off'; t.textContent='auto-saved in browser · export to keep a CSV'; }
+  else if(sess.lastSaveOk===false){ el.className='foot-live off'; t.textContent='live save failed — check file access'; }
+  else{
     el.className='foot-live ok';
-    let agoTxt='';
-    if(sess.lastSaveTime){
-      const secs=Math.round((Date.now()-sess.lastSaveTime)/1000);
-      agoTxt = secs<60 ? ` · saved ${secs}s ago` : ` · saved ${Math.floor(secs/60)}m ago`;
-    }
-    txt.textContent=`live → ${sess.fileHandle.name}${agoTxt}`;
+    let ago='';
+    if(sess.lastSaveTime){ const s=Math.round((Date.now()-sess.lastSaveTime)/1000); ago=s<60?` · saved ${s}s ago`:` · saved ${Math.floor(s/60)}m ago`; }
+    t.textContent=`live → ${sess.fileHandle.name}${ago}`;
   }
 }
 
-/* ── session start ── */
-function startSession(){
-  const park=document.getElementById('park-sel').value;
-  if(!park){alert('Please select a park.');return;}
-  sess.park=park; sess.initials=(document.getElementById('init-inp').value.trim().toUpperCase()||'—');
-  document.getElementById('h-park').textContent=park+' State Park';
+/* ══════════ SESSION ══════════ */
+function enterDashboard(){
+  document.getElementById('h-park').textContent=(sess.park||'Park')+' State Park';
   document.getElementById('h-loc').textContent=sess.lat?`${sess.lat.toFixed(4)}, ${sess.lon.toFixed(4)} (fixed park coordinates)`:'—';
   if(sess.wx) applyWxStrip(sess.wx);
   document.getElementById('setup').classList.remove('active');
   document.getElementById('dash').classList.add('active');
   updateClock(); setInterval(updateClock,1000);
   scheduleWxRefresh();
-  resetForm();
-  updateStats(); drawRing(); renderActBars(); renderPassBars(); renderEntries(); updateLiveBadge();
-  updateFooter(); saveState();
+  ensureBlockCfg(); applyLayout(); renderChipRows(); resetForm();
+  refreshAll(); updateLiveBadge();
+}
+function startSession(){
+  const park=document.getElementById('park-sel').value;
+  if(!park){alert('Please select a park.');return;}
+  sess.park=park; sess.initials=(document.getElementById('init-inp').value.trim().toUpperCase()||'—');
+  testMode=false;
+  enterDashboard(); saveState();
+}
+function enterTestMode(){
+  testMode=true;
+  const sel=document.getElementById('park-sel').value;
+  sess.park=sel||'Pocahontas';
+  sess.initials=(document.getElementById('init-inp').value.trim().toUpperCase()||'TEST');
+  if(!sess.lat){ const c=PARKS[sess.park]; sess.lat=c.lat; sess.lon=c.lon; }
+  sess.liveMode=false;
+  document.getElementById('test-banner').classList.add('show');
+  enterDashboard();
+  loadSampleData();
+  refreshWeather();
 }
 function updateClock(){
   const n=new Date();
@@ -968,29 +1007,35 @@ function applyWxStrip(wx){
   document.getElementById('e-cloud').textContent=wx.cloud+'%';
   document.getElementById('e-wind').textContent=wx.wind;
   document.getElementById('e-hum').textContent=wx.humidity+'%';
-  sess.wxAt=new Date();
-  updateWxAsOf();
+  sess.wxAt=new Date(); updateWxAsOf();
 }
 function updateWxAsOf(){
-  const el=document.getElementById('wx-asof');
-  if(!el) return;
-  if(!sess.wxAt){ el.textContent=''; return; }
-  const secs=Math.round((Date.now()-sess.wxAt)/1000);
-  let txt = secs<60 ? 'just now' : secs<3600 ? Math.floor(secs/60)+'m ago' : Math.floor(secs/3600)+'h ago';
-  el.textContent='updated '+txt;
-  el.style.color = secs>1800 ? 'var(--rust)' : 'var(--muted-dim)';
+  const el=document.getElementById('wx-asof'); if(!el||!sess.wxAt){ if(el) el.textContent=''; return; }
+  const s=Math.round((Date.now()-sess.wxAt)/1000);
+  el.textContent='updated '+(s<60?'just now':s<3600?Math.floor(s/60)+'m ago':Math.floor(s/3600)+'h ago');
+  el.style.color=s>1800?'var(--rust)':'var(--muted-dim)';
 }
 function scheduleWxRefresh(){
   if(wxTimer) clearTimeout(wxTimer);
-  const mins=15+Math.random()*10;
-  wxTimer=setTimeout(async()=>{ await refreshWeather(); scheduleWxRefresh(); }, mins*60*1000);
+  wxTimer=setTimeout(async()=>{ await refreshWeather(); scheduleWxRefresh(); },(15+Math.random()*10)*60*1000);
 }
 async function refreshWeather(){
   if(!sess.lat||!sess.lon) return;
-  try{const wx=await fetchWx(sess.lat,sess.lon); sess.wx=wx; applyWxStrip(wx);}catch(e){}
+  try{ const wx=await fetchWx(sess.lat,sess.lon); sess.wx=wx; applyWxStrip(wx); }catch(e){}
 }
 
-/* ── form controls ── */
+/* ══════════ TABS ══════════ */
+function switchTab(t){
+  activeTab=t;
+  document.getElementById('tab-log').classList.toggle('active',t==='log');
+  document.getElementById('tab-ana').classList.toggle('active',t==='ana');
+  document.getElementById('pane-log').classList.toggle('active',t==='log');
+  document.getElementById('pane-ana').classList.toggle('active',t==='ana');
+  if(t==='ana') renderAnalytics();
+  if(devEdit) renderBlockControls();
+}
+
+/* ══════════ FORM ══════════ */
 function setPeople(n){
   curPpl=Math.max(1,n);
   document.getElementById('ppl-val').textContent=curPpl;
@@ -998,22 +1043,20 @@ function setPeople(n){
 }
 function adjPeople(d){ setPeople(curPpl+d); }
 function toggleReturning(){
-  curReturning=!curReturning;
-  document.getElementById('ret-btn').classList.toggle('active',curReturning);
-  document.getElementById('ret-hint').classList.toggle('show',curReturning);
+  curRet=!curRet;
+  document.getElementById('ret-btn').classList.toggle('active',curRet);
+  document.getElementById('ret-hint').classList.toggle('show',curRet);
 }
 function selPass(btn){
-  const v=btn.dataset.v;
   const wrap=document.getElementById('pass-wrap');
-  const noneBtn=wrap.querySelector('.chip[data-v="None"]');
-  if(v==='None'){
+  const none=wrap.querySelector('.chip[data-v="None"]');
+  if(btn.dataset.v==='None'){
     wrap.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
-    if(noneBtn) noneBtn.classList.add('active');
+    if(none) none.classList.add('active');
   }else{
-    if(noneBtn) noneBtn.classList.remove('active');
+    if(none) none.classList.remove('active');
     btn.classList.toggle('active');
-    const anyTag=[...wrap.querySelectorAll('.chip.pass-tag')].some(b=>b.classList.contains('active'));
-    if(!anyTag && noneBtn) noneBtn.classList.add('active');
+    if(![...wrap.querySelectorAll('.chip.pass-tag')].some(b=>b.classList.contains('active'))&&none) none.classList.add('active');
   }
   curPasses=[...wrap.querySelectorAll('.chip.pass-tag.active')].map(b=>b.dataset.v);
   chkReady();
@@ -1026,246 +1069,363 @@ function selVtype(btn){
   document.querySelectorAll('#vtype-wrap .chip').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active'); curVtype=btn.dataset.v; chkReady();
 }
+function vis(id){ return CONFIG.blocks[id]?CONFIG.blocks[id].v:true; }
 function chkReady(){
-  const needV=CONFIG.show.vehicle, needA=CONFIG.show.activity;
-  const ok=(!needV||!!curVtype)&&(!needA||!!curAct);
-  document.getElementById('log-btn').disabled=!ok;
+  const btn=document.getElementById('log-btn'); if(!btn) return;
+  const ok=(!vis('row-vehicle')||!!curVtype)&&(!vis('row-activity')||!!curAct);
+  btn.disabled=devEdit?true:!ok;
 }
 function resetForm(){
-  curPpl=1; curReturning=false; curPasses=[]; curAct=null;
+  curPpl=1; curRet=false; curPasses=[]; curAct=null;
   document.getElementById('ppl-val').textContent='1';
   document.getElementById('minus-btn').disabled=true;
   document.getElementById('notes').value='';
   document.getElementById('ret-btn').classList.remove('active');
   document.getElementById('ret-hint').classList.remove('show');
-  document.querySelectorAll('#act-wrap .chip, #pass-wrap .chip, #vtype-wrap .chip').forEach(b=>b.classList.remove('active'));
-  const firstV=document.querySelector('#vtype-wrap .chip');
-  if(firstV){ firstV.classList.add('active'); curVtype=firstV.dataset.v; }
-  else { curVtype=CONFIG.vehicles[0]||'—'; }
-  const noneBtn=document.querySelector('#pass-wrap .chip[data-v="None"]');
-  if(noneBtn) noneBtn.classList.add('active');
+  document.querySelectorAll('#act-wrap .chip,#pass-wrap .chip,#vtype-wrap .chip').forEach(b=>b.classList.remove('active'));
+  const fv=document.querySelector('#vtype-wrap .chip:not(.chip-add)');
+  if(fv){ fv.classList.add('active'); curVtype=fv.dataset.v; } else curVtype=CONFIG.vehicles[0]||'—';
+  const none=document.querySelector('#pass-wrap .chip[data-v="None"]');
+  if(none) none.classList.add('active');
   chkReady();
 }
-
 function logEntry(){
-  if(document.getElementById('log-btn').disabled) return;
-  document.getElementById('log-btn').disabled=true;
-  const now=new Date();
-  const wx=sess.wx||{};
-  const returning=curReturning?curPpl:0;
-  const netNew=curPpl-returning;
+  const btn=document.getElementById('log-btn');
+  if(btn.disabled) return;
+  btn.disabled=true;
+  const now=new Date(), wx=sess.wx||{};
   const entry={
     num:entries.length+1,
     date:now.toLocaleDateString('en-US',{month:'2-digit',day:'2-digit',year:'numeric'}),
     time:now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}),
-    park:sess.park, observer:sess.initials, vtype:curVtype||'—',
-    people:curPpl, returning, netNew,
-    passes:[...curPasses], activity:curAct||'Unspecified',
-    sky:wx.sky||'', precip:wx.precip||'', temp:wx.temp!==undefined?wx.temp:'',
-    humidity:wx.humidity!==undefined?wx.humidity:'', cloud:wx.cloud!==undefined?wx.cloud:'',
-    wind:wx.wind||'', notes:document.getElementById('notes').value.trim()
+    ts:now.getTime(),
+    park:sess.park,observer:sess.initials,vtype:curVtype||'—',
+    people:curPpl,ret:curRet,passes:[...curPasses],activity:curAct||'Unspecified',
+    sky:wx.sky||'',precip:wx.precip||'',temp:wx.temp!==undefined?wx.temp:'',
+    humidity:wx.humidity!==undefined?wx.humidity:'',cloud:wx.cloud!==undefined?wx.cloud:'',
+    wind:wx.wind||'',notes:document.getElementById('notes').value.trim()
   };
-  entries.push(entry); totalPpl+=netNew; totalReturn+=returning;
-  saveState();
-
-  const btn=document.getElementById('log-btn'); const prev=btn.textContent;
+  entries.push(entry); saveState();
+  const prev=btn.textContent;
   btn.classList.add('flash'); btn.textContent='✓ Logged';
-
-  appendLiveRow(entry);
-  updateStats(); drawRing(); renderActBars(); renderPassBars(); renderEntries(); updateFooter();
-
+  if(!testMode) appendLiveRow(entry);
+  refreshAll();
   setTimeout(()=>{ btn.classList.remove('flash'); btn.textContent=prev; resetForm(); },340);
 }
+
+/* ══════════ STATS — new arrivals and returning campers kept separate ══════════ */
+function split(){
+  const nw=entries.filter(e=>!e.ret), rt=entries.filter(e=>e.ret);
+  const sum=a=>a.reduce((s,e)=>s+e.people,0);
+  return {nw,rt,newVeh:nw.length,retVeh:rt.length,newPpl:sum(nw),retPpl:sum(rt)};
+}
+function refreshAll(){
+  updateStats(); drawRing(); renderActBars(); renderPassBars(); renderEntries(); updateFooter();
+  if(activeTab==='ana') renderAnalytics();
+  if(devEdit) renderBlockControls();
+}
 function updateFooter(){
+  const s=split();
   document.getElementById('ft-n').textContent=entries.length;
-  document.getElementById('ft-p').textContent=totalPpl;
-  document.getElementById('ft-r').textContent=totalReturn;
+  document.getElementById('ft-p').textContent=s.newPpl;
+  document.getElementById('ft-r').textContent=s.retPpl;
 }
 function updateStats(){
+  const s=split();
   document.getElementById('st-cars').textContent=entries.length;
-  document.getElementById('st-new').textContent=totalPpl;
-  const grossPpl=entries.reduce((s,e)=>s+e.people,0);
-  document.getElementById('st-new-sub').textContent=`${grossPpl} total · ${totalReturn} returning`;
-  document.getElementById('st-avg').textContent=entries.length?(totalPpl/entries.length).toFixed(1):'0.0';
-  const passCount=entries.filter(e=>e.passes&&e.passes.length).length;
-  document.getElementById('st-pass').textContent=entries.length?Math.round(passCount/entries.length*100)+'%':'0%';
+  document.getElementById('st-cars-sub').textContent=`${s.newVeh} new · ${s.retVeh} returning`;
+  document.getElementById('st-new').textContent=s.newPpl;
+  document.getElementById('st-avg').textContent=s.newVeh?(s.newPpl/s.newVeh).toFixed(2):'0.00';
+  document.getElementById('st-ret').textContent=s.retPpl;
+  document.getElementById('st-ret-sub').textContent=`${s.retVeh} vehicles · ${s.retVeh?(s.retPpl/s.retVeh).toFixed(2):'0.00'} per veh`;
+  const pc=entries.filter(e=>e.passes&&e.passes.length).length;
+  document.getElementById('st-pass').textContent=entries.length?Math.round(pc/entries.length*100)+'%':'0%';
 }
 function drawRing(){
-  const svg=document.getElementById('ring-svg');
-  const cx=80,cy=80,radii=[24,36,48,60,72];
-  const count=entries.length;
-  let parts=[`<circle cx="${cx}" cy="${cy}" r="2.5" fill="#D9A441"/>`];
+  const svg=document.getElementById('ring-svg'), cx=80,cy=80,radii=[24,36,48,60,72],count=entries.length;
+  let p=[`<circle cx="${cx}" cy="${cy}" r="2.5" fill="#D9A441"/>`];
   radii.forEach((r,i)=>{
-    const lower=i*5;
-    const progress=Math.max(0,Math.min(1,(count-lower)/5));
-    const circ=2*Math.PI*r;
-    parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2C4633" stroke-width="1.1"/>`);
-    if(progress>0){
-      const dash=progress*circ;
-      parts.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#D9A441" stroke-width="2" stroke-linecap="round" stroke-dasharray="${dash} ${circ}" transform="rotate(-90 ${cx} ${cy})" opacity="${progress>=1?1:0.85}"/>`);
-    }
+    const prog=Math.max(0,Math.min(1,(count-i*5)/5)), circ=2*Math.PI*r;
+    p.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2C4633" stroke-width="1.1"/>`);
+    if(prog>0) p.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#D9A441" stroke-width="2" stroke-linecap="round" stroke-dasharray="${prog*circ} ${circ}" transform="rotate(-90 ${cx} ${cy})" opacity="${prog>=1?1:.85}"/>`);
   });
-  parts.push(`<text x="${cx}" y="${cy-2}" text-anchor="middle" font-family="Fraunces,serif" font-size="32" font-weight="600" fill="#E9F0E7">${count}</text>`);
-  parts.push(`<text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1px" fill="#7FA084">VEHICLES</text>`);
-  svg.innerHTML=parts.join('');
+  p.push(`<text x="${cx}" y="${cy-2}" text-anchor="middle" font-family="Fraunces,serif" font-size="32" font-weight="600" fill="#E9F0E7">${count}</text>`);
+  p.push(`<text x="${cx}" y="${cy+16}" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" letter-spacing="1px" fill="#7FA084">VEHICLES</text>`);
+  svg.innerHTML=p.join('');
 }
-function renderBars(wrapId,order,countFn,emptyMsg){
-  const wrap=document.getElementById(wrapId);
-  if(!wrap) return;
-  if(!entries.length){ wrap.innerHTML=`<div class="empty-note">${emptyMsg}</div>`; return; }
-  const counts={}; order.forEach(k=>counts[k]=0);
-  countFn(counts);
-  const keys=Object.keys(counts).filter(k=>counts[k]>0).sort((a,b)=>counts[b]-counts[a]);
-  if(!keys.length){ wrap.innerHTML=`<div class="empty-note">${emptyMsg}</div>`; return; }
-  const max=Math.max(...keys.map(k=>counts[k]),1);
-  wrap.innerHTML=keys.map(k=>`
-    <div class="bar-row">
-      <div class="bar-top"><span>${esc(k)}</span><span class="bar-n mono">${counts[k]}</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(counts[k]/max*100).toFixed(0)}%"></div></div>
-    </div>`).join('');
+function renderBars(id,order,fn,empty){
+  const wrap=document.getElementById(id); if(!wrap) return;
+  if(!entries.length){ wrap.innerHTML=`<div class="empty-note">${empty}</div>`; return; }
+  const c={}; order.forEach(k=>c[k]=0); fn(c);
+  const keys=Object.keys(c).filter(k=>c[k]>0).sort((a,b)=>c[b]-c[a]);
+  if(!keys.length){ wrap.innerHTML=`<div class="empty-note">${empty}</div>`; return; }
+  const max=Math.max(...keys.map(k=>c[k]),1);
+  wrap.innerHTML=keys.map(k=>`<div class="bar-row"><div class="bar-top"><span>${esc(k)}</span><span class="bar-n mono">${c[k]}</span></div><div class="bar-track"><div class="bar-fill" style="width:${(c[k]/max*100).toFixed(0)}%"></div></div></div>`).join('');
 }
-function renderActBars(){
-  renderBars('act-bars',CONFIG.activities,(c)=>{
-    entries.forEach(e=>{ c[e.activity]=(c[e.activity]||0)+1; });
-  },'No entries yet');
-}
-function renderPassBars(){
-  renderBars('pass-bars',CONFIG.passes,(c)=>{
-    entries.forEach(e=>{ (e.passes||[]).forEach(p=>{ c[p]=(c[p]||0)+1; }); });
-  },'No passes logged yet');
-}
+function renderActBars(){ renderBars('act-bars',CONFIG.activities,c=>{entries.forEach(e=>{c[e.activity]=(c[e.activity]||0)+1;});},'No entries yet'); }
+function renderPassBars(){ renderBars('pass-bars',CONFIG.passes,c=>{entries.forEach(e=>{(e.passes||[]).forEach(p=>{c[p]=(c[p]||0)+1;});});},'No passes logged yet'); }
 function renderEntries(){
   const wrap=document.getElementById('entries-list');
   if(!entries.length){ wrap.innerHTML='<div class="empty-note">Logged vehicles appear here</div>'; return; }
   wrap.innerHTML=[...entries].reverse().slice(0,10).map(e=>{
-    const hasPass=e.passes&&e.passes.length;
-    const dotClass=hasPass?'dot-yes':'dot-unk';
-    const passText=hasPass?e.passes.join(', '):'';
-    const retTag=e.returning?`<span class="e-ret">↩</span>`:'';
-    const tail=[passText,e.notes].filter(Boolean).join(' · ');
-    return `<div class="e-row">
-      <span class="e-t">${esc(e.time)}</span>
-      <span class="e-p">${e.people}p${retTag}</span>
+    const hp=e.passes&&e.passes.length;
+    const tail=[hp?e.passes.join(', '):'',e.notes].filter(Boolean).join(' · ');
+    return `<div class="e-row"><span class="e-t">${esc(e.time)}</span>
+      <span class="e-p">${e.people}p${e.ret?'<span class="e-ret">↩</span>':''}</span>
       <span class="e-vt">${esc(e.vtype||'')}</span>
-      <span class="e-d"><span class="e-dot ${dotClass}"></span>${esc(e.activity)}${tail?' · '+esc(tail):''}</span>
-    </div>`;
+      <span class="e-d"><span class="e-dot ${hp?'dot-yes':'dot-unk'}"></span>${esc(e.activity)}${tail?' · '+esc(tail):''}</span></div>`;
   }).join('');
 }
-
 function exportCSV(){
   if(!entries.length){alert('No entries to export yet!');return;}
-  const rows=entries.map(e=>csvLine(entryToRow(e)));
-  const csv=[csvLine(CSV_HEADER),...rows].join('\r\n');
-  const blob=new Blob([csv],{type:'text/csv'});
-  const url=URL.createObjectURL(blob);
+  const csv=[csvLine(CSV_HEADER),...entries.map(e=>csvLine(entryToRow(e)))].join('\r\n');
+  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'-');
   const a=document.createElement('a');
-  a.href=url; a.download=`ParkCount_Backup_${(sess.park||'park').replace(/[^A-Za-z0-9]+/g,'_')}_${d}.csv`; a.click();
+  a.href=url; a.download=`ParkCount_${(sess.park||'park').replace(/[^A-Za-z0-9]+/g,'_')}_${d}.csv`; a.click();
   URL.revokeObjectURL(url);
 }
 
-/* ══════════════ DEVELOPER MODE ══════════════ */
-function openDev(){
-  document.getElementById('dev-overlay').classList.add('show');
-  document.getElementById('dev-lock').classList.remove('hidden');
-  document.getElementById('dev-body').classList.add('hidden');
-  document.getElementById('dev-code').value='';
-  document.getElementById('dev-err').textContent='';
-  setTimeout(()=>document.getElementById('dev-code').focus(),50);
+/* ══════════ STATISTICS ══════════ */
+const T95=[12.706,4.303,3.182,2.776,2.571,2.447,2.365,2.306,2.262,2.228,2.201,2.179,2.160,2.145,2.131,2.120,2.110,2.101,2.093,2.086,2.080,2.074,2.069,2.064,2.060,2.056,2.052,2.048,2.045,2.042];
+function tCrit(df){ if(df<1) return NaN; return df<=30?T95[df-1]:1.96; }
+function ciStats(vals){
+  const n=vals.length;
+  if(n===0) return {n:0,mean:0,sd:0,se:0,moe:0,lo:0,hi:0};
+  const mean=vals.reduce((a,b)=>a+b,0)/n;
+  if(n===1) return {n,mean,sd:0,se:0,moe:NaN,lo:NaN,hi:NaN};
+  const sd=Math.sqrt(vals.reduce((s,x)=>s+(x-mean)**2,0)/(n-1));
+  const se=sd/Math.sqrt(n), moe=tCrit(n-1)*se;
+  return {n,mean,sd,se,moe,lo:mean-moe,hi:mean+moe};
 }
-function closeDev(){
-  document.getElementById('dev-overlay').classList.remove('show');
-  document.getElementById('dev-lock').classList.remove('hidden');
-  document.getElementById('dev-body').classList.add('hidden');
+function neededN(sd,target){
+  if(!(sd>0)||!(target>0)) return null;
+  return Math.ceil((1.96*sd/target)**2);
 }
-function unlockDev(){
-  const v=document.getElementById('dev-code').value.trim();
-  if(v===DEV_PASSCODE){
-    document.getElementById('dev-lock').classList.add('hidden');
-    document.getElementById('dev-body').classList.remove('hidden');
-    renderDevLists();
-  }else{
-    document.getElementById('dev-err').textContent='Incorrect passcode.';
-    document.getElementById('dev-code').value='';
-  }
-}
-function renderDevLists(){
-  ['activities','passes','vehicles'].forEach(key=>{
-    const wrap=document.getElementById('dev-'+key);
-    const arr=CONFIG[key];
-    wrap.innerHTML = arr.length ? arr.map((item,i)=>`
-      <div class="dev-item">
-        <span class="dev-item-name">${esc(item)}</span>
-        <button onclick="devMove('${key}',${i},-1)" ${i===0?'disabled':''} title="Move up">↑</button>
-        <button onclick="devMove('${key}',${i},1)" ${i===arr.length-1?'disabled':''} title="Move down">↓</button>
-        <button class="dev-del" onclick="devRemove('${key}',${i})" title="Remove">✕</button>
-      </div>`).join('') : '<div class="dev-empty">Nothing here yet — add one below.</div>';
-  });
-  Object.keys(CONFIG.show).forEach(k=>{
-    const cb=document.getElementById('tg-'+k);
-    if(cb) cb.checked=!!CONFIG.show[k];
-  });
-}
-function commitDev(){
-  saveConfig();
-  renderDevLists();
-  renderChipRows();
-  resetForm();
-  renderActBars(); renderPassBars();
-}
-function devAdd(key){
-  const inp=document.getElementById('add-'+key);
-  const v=inp.value.trim();
-  if(!v) return;
-  if(CONFIG[key].some(x=>x.toLowerCase()===v.toLowerCase())){ inp.value=''; return; }
-  CONFIG[key].push(v); inp.value=''; commitDev();
-}
-function devRemove(key,i){ CONFIG[key].splice(i,1); commitDev(); }
-function devMove(key,i,d){
-  const j=i+d, a=CONFIG[key];
-  if(j<0||j>=a.length) return;
-  const t=a[i]; a[i]=a[j]; a[j]=t;
-  commitDev();
-}
-function devToggle(k,checked){ CONFIG.show[k]=checked; commitDev(); }
-function devReset(){
-  if(!confirm('Reset all vehicle types, passes, activities and section visibility back to the defaults?')) return;
-  CONFIG=JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-  commitDev();
-}
-/* pressing Enter inside an "add" box adds the item */
-['activities','passes','vehicles'].forEach(key=>{
-  document.addEventListener('keydown',(e)=>{
-    if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='add-'+key){
-      e.preventDefault(); devAdd(key);
-    }
-  });
-});
 
-/* ── keyboard shortcuts ── */
+/* ══════════ SVG CHART HELPERS ══════════ */
+function chartEmpty(msg){ return `<div class="empty-note">${msg}</div>`; }
+function axis(x0,y0,x1,y1){ return `<line x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}" stroke="#2C4633" stroke-width="1"/>`; }
+
+function chartRunningMean(){
+  const vals=entries.filter(e=>!e.ret).map(e=>e.people);
+  if(vals.length<3) return chartEmpty('Need at least 3 new-arrival vehicles before a running mean means anything.');
+  const pts=[]; let sum=0,sq=0;
+  for(let k=1;k<=vals.length;k++){
+    sum+=vals[k-1]; sq+=vals[k-1]**2;
+    const m=sum/k;
+    const v=k>1?Math.max(0,(sq-k*m*m)/(k-1)):0;
+    const sd=Math.sqrt(v), moe=k>1?tCrit(k-1)*sd/Math.sqrt(k):0;
+    pts.push({k,m,lo:m-moe,hi:m+moe});
+  }
+  const W=330,H=180,L=34,R=8,T=10,B=24;
+  const lo=Math.min(...pts.map(p=>p.lo)), hi=Math.max(...pts.map(p=>p.hi));
+  const pad=(hi-lo)*0.15||0.5, y0=Math.max(0,lo-pad), y1=hi+pad;
+  const X=k=>L+((k-1)/(pts.length-1||1))*(W-L-R);
+  const Y=v=>T+(1-(v-y0)/((y1-y0)||1))*(H-T-B);
+  const band=pts.map(p=>`${X(p.k)},${Y(p.hi)}`).join(' ')+' '+pts.slice().reverse().map(p=>`${X(p.k)},${Y(p.lo)}`).join(' ');
+  const line=pts.map(p=>`${X(p.k)},${Y(p.m)}`).join(' ');
+  let g='';
+  for(let i=0;i<=3;i++){
+    const v=y0+(y1-y0)*i/3, y=Y(v);
+    g+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="#1F3324" stroke-width="1"/>`;
+    g+=`<text x="${L-5}" y="${y+3}" text-anchor="end" font-size="8.5" fill="#587862" font-family="JetBrains Mono,monospace">${v.toFixed(1)}</text>`;
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}
+    <polygon points="${band}" fill="rgba(217,164,65,.22)"/>
+    <polyline points="${line}" fill="none" stroke="#D9A441" stroke-width="2" stroke-linejoin="round"/>
+    ${axis(L,H-B,W-R,H-B)}
+    <text x="${L}" y="${H-8}" font-size="8.5" fill="#587862" font-family="JetBrains Mono,monospace">1</text>
+    <text x="${W-R}" y="${H-8}" text-anchor="end" font-size="8.5" fill="#587862" font-family="JetBrains Mono,monospace">${pts.length} vehicles</text>
+  </svg>`;
+}
+
+function chartConvergence(){
+  const vals=entries.filter(e=>!e.ret).map(e=>e.people);
+  if(vals.length<3) return chartEmpty('Not enough new arrivals yet.');
+  const s=ciStats(vals);
+  const maxN=Math.max(vals.length*3,neededN(s.sd,TARGET_MOE)||vals.length*3,20);
+  const W=330,H=150,L=34,R=8,T=10,B=24;
+  const curve=[];
+  for(let n=2;n<=maxN;n+=Math.max(1,Math.round(maxN/70))){
+    curve.push({n,moe:1.96*s.sd/Math.sqrt(n)});
+  }
+  const y1=Math.max(...curve.map(c=>c.moe));
+  const X=n=>L+((n-2)/((maxN-2)||1))*(W-L-R);
+  const Y=v=>T+(1-v/(y1||1))*(H-T-B);
+  const line=curve.map(c=>`${X(c.n)},${Y(c.moe)}`).join(' ');
+  const ty=Y(TARGET_MOE);
+  const nowX=X(Math.min(vals.length,maxN));
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">
+    <polyline points="${line}" fill="none" stroke="#5B94C2" stroke-width="2"/>
+    <line x1="${L}" y1="${ty}" x2="${W-R}" y2="${ty}" stroke="#6FA871" stroke-width="1" stroke-dasharray="4 3"/>
+    <text x="${W-R}" y="${ty-4}" text-anchor="end" font-size="8.5" fill="#6FA871" font-family="JetBrains Mono,monospace">target ±${TARGET_MOE.toFixed(2)}</text>
+    <line x1="${nowX}" y1="${T}" x2="${nowX}" y2="${H-B}" stroke="#D9A441" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="${nowX+4}" y="${T+9}" font-size="8.5" fill="#D9A441" font-family="JetBrains Mono,monospace">you are here</text>
+    ${axis(L,H-B,W-R,H-B)}
+    <text x="${L}" y="${H-8}" font-size="8.5" fill="#587862" font-family="JetBrains Mono,monospace">2</text>
+    <text x="${W-R}" y="${H-8}" text-anchor="end" font-size="8.5" fill="#587862" font-family="JetBrains Mono,monospace">${maxN} vehicles sampled</text>
+  </svg>`;
+}
+
+function chartHourly(){
+  const withTs=entries.filter(e=>e.ts);
+  if(!withTs.length) return chartEmpty('Hourly breakdown appears once vehicles are logged in this session.');
+  const buckets={};
+  withTs.forEach(e=>{
+    const h=new Date(e.ts).getHours();
+    if(!buckets[h]) buckets[h]={n:0,r:0};
+    if(e.ret) buckets[h].r++; else buckets[h].n++;
+  });
+  const hours=Object.keys(buckets).map(Number).sort((a,b)=>a-b);
+  const W=330,H=170,L=28,R=8,T=10,B=28;
+  const max=Math.max(...hours.map(h=>buckets[h].n+buckets[h].r),1);
+  const bw=(W-L-R)/hours.length;
+  let g='';
+  hours.forEach((h,i)=>{
+    const b=buckets[h], x=L+i*bw, iw=Math.max(4,bw*0.34);
+    const hn=(b.n/max)*(H-T-B), hr=(b.r/max)*(H-T-B);
+    g+=`<rect x="${x+bw/2-iw-1}" y="${H-B-hn}" width="${iw}" height="${hn}" fill="#D9A441" rx="1.5"/>`;
+    g+=`<rect x="${x+bw/2+1}" y="${H-B-hr}" width="${iw}" height="${hr}" fill="#C2693F" rx="1.5"/>`;
+    const lbl=h===0?'12a':h<12?h+'a':h===12?'12p':(h-12)+'p';
+    g+=`<text x="${x+bw/2}" y="${H-B+13}" text-anchor="middle" font-size="8.5" fill="#587862" font-family="JetBrains Mono,monospace">${lbl}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}">${g}${axis(L,H-B,W-R,H-B)}
+    <text x="${L-4}" y="${T+8}" text-anchor="end" font-size="8.5" fill="#587862" font-family="JetBrains Mono,monospace">${max}</text></svg>`;
+}
+
+function renderCompare(){
+  const s=split();
+  const nm=s.newVeh?s.newPpl/s.newVeh:0, rm=s.retVeh?s.retPpl/s.retVeh:0;
+  const max=Math.max(nm,rm,1);
+  const row=(lbl,val,veh,ppl,color)=>`
+    <div class="bar-row">
+      <div class="bar-top"><span>${lbl}</span><span class="bar-n mono">${val.toFixed(2)} / veh</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(val/max*100).toFixed(0)}%;background:${color}"></div></div>
+      <div class="chart-note" style="margin-top:4px">${veh} vehicles · ${ppl} people</div>
+    </div>`;
+  const nCI=ciStats(s.nw.map(e=>e.people)), rCI=ciStats(s.rt.map(e=>e.people));
+  let cmp='';
+  if(nCI.n>1&&rCI.n>1){
+    const overlap=!(nCI.hi<rCI.lo||rCI.hi<nCI.lo);
+    cmp=`<div class="ana-kv"><span>Do the two CIs overlap?</span><span class="${overlap?'':'good'}">${overlap?'Yes — group sizes look similar':'No — genuinely different group sizes'}</span></div>`;
+  }
+  return row('New arrivals',nm,s.newVeh,s.newPpl,'#D9A441')+
+         row('Returning campers',rm,s.retVeh,s.retPpl,'#C2693F')+cmp;
+}
+
+function renderForecast(){
+  const withTs=entries.filter(e=>e.ts).sort((a,b)=>a.ts-b.ts);
+  if(withTs.length<4) return chartEmpty('Log at least 4 vehicles in this session to project a rate.');
+  const span=(withTs[withTs.length-1].ts-withTs[0].ts)/3600000;
+  if(span<=0.05) return chartEmpty('Not enough time has passed to estimate an arrival rate.');
+  const vehPerHr=withTs.length/span;
+  const s=split();
+  const mult=s.newVeh?s.newPpl/s.newVeh:0;
+  const st=ciStats(s.nw.map(e=>e.people));
+  const kv=(k,v)=>`<div class="ana-kv"><span>${k}</span><span>${v}</span></div>`;
+  let out=kv('Observed window',span.toFixed(1)+' h')+
+          kv('Arrival rate',vehPerHr.toFixed(1)+' vehicles / h');
+  [1,2,3].forEach(h=>{
+    const veh=vehPerHr*h, ppl=veh*mult;
+    const band=(st.n>1&&isFinite(st.moe))?` (±${(veh*st.moe).toFixed(0)})`:'';
+    out+=kv(`Next ${h} h`,`~${veh.toFixed(0)} vehicles · ~${ppl.toFixed(0)} visitors${band}`);
+  });
+  return out;
+}
+
+function renderAnalytics(){
+  const s=split();
+  const st=ciStats(s.nw.map(e=>e.people));
+  const ciBox=document.getElementById('ana-ci');
+  if(st.n<2){
+    ciBox.innerHTML=chartEmpty('Log at least 2 new-arrival vehicles to compute a confidence interval.<br>Returning campers are excluded by design — they are a separate population.');
+  }else{
+    ciBox.innerHTML=`
+      <div class="ci-band">
+        <span class="ci-lo">${st.lo.toFixed(2)}</span>
+        <span class="ci-mid">${st.mean.toFixed(2)}</span>
+        <span class="ci-hi">${st.hi.toFixed(2)}</span>
+      </div>
+      <div class="chart-note">We are 95% confident the true average number of people per newly-arriving vehicle lies between <strong>${st.lo.toFixed(2)}</strong> and <strong>${st.hi.toFixed(2)}</strong>, based on ${st.n} sampled vehicles.</div>
+      <div style="margin-top:12px">
+        ${`<div class="ana-kv"><span>Sample size (new arrivals)</span><span>${st.n} vehicles</span></div>`}
+        ${`<div class="ana-kv"><span>Std. deviation</span><span>${st.sd.toFixed(2)}</span></div>`}
+        ${`<div class="ana-kv"><span>Margin of error</span><span class="${st.moe<=TARGET_MOE?'good':'warn'}">±${st.moe.toFixed(3)}</span></div>`}
+        ${`<div class="ana-kv"><span>Returning campers excluded</span><span>${s.retVeh} vehicles</span></div>`}
+      </div>`;
+  }
+
+  const conv=document.getElementById('ana-conv-kv');
+  if(st.n<3){
+    conv.innerHTML=chartEmpty('Not enough new arrivals yet.');
+    document.getElementById('ana-conv-chart').innerHTML='';
+  }else{
+    const need=neededN(st.sd,TARGET_MOE);
+    const more=need?Math.max(0,need-st.n):0;
+    conv.innerHTML=
+      `<div class="ana-kv"><span>Current margin</span><span class="${st.moe<=TARGET_MOE?'good':'warn'}">±${st.moe.toFixed(3)}</span></div>`+
+      `<div class="ana-kv"><span>Target margin</span><span>±${TARGET_MOE.toFixed(2)}</span></div>`+
+      `<div class="ana-kv"><span>Vehicles needed for target</span><span>${need??'—'}</span></div>`+
+      `<div class="ana-kv"><span>Still to sample</span><span class="${more===0?'good':''}">${more===0?'target reached':more+' more'}</span></div>`;
+    document.getElementById('ana-conv-chart').innerHTML=chartConvergence();
+  }
+
+  document.getElementById('ana-run-chart').innerHTML=chartRunningMean();
+  document.getElementById('ana-hour-chart').innerHTML=chartHourly();
+  document.getElementById('ana-cmp').innerHTML=renderCompare();
+  document.getElementById('ana-fc').innerHTML=renderForecast();
+}
+
+/* ══════════ SAMPLE DATA (test mode) ══════════ */
+function loadSampleData(){
+  entries=[];
+  const now=Date.now(), N=64;
+  const acts=CONFIG.activities, veh=CONFIG.vehicles, pss=CONFIG.passes;
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  for(let i=0;i<N;i++){
+    const ts=now-(N-i)*(1000*60*(3+Math.random()*7));
+    const d=new Date(ts);
+    const ret=Math.random()<0.19;
+    const ppl=ret?1+Math.floor(Math.random()*3):Math.max(1,Math.round(2.6+(Math.random()+Math.random()+Math.random()-1.5)*1.7));
+    const passes=ret?['Camping']:(Math.random()<0.62?[pick(pss)]:[]);
+    entries.push({
+      num:i+1,
+      date:d.toLocaleDateString('en-US',{month:'2-digit',day:'2-digit',year:'numeric'}),
+      time:d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}),
+      ts,park:sess.park,observer:'TEST',vtype:pick(veh),
+      people:ppl,ret,passes,activity:ret?'Camping/Cabin':pick(acts),
+      sky:'Clear',precip:'None',temp:78,humidity:52,cloud:12,wind:'6 mph SW',notes:'sample'
+    });
+  }
+  refreshAll();
+}
+function clearSampleData(){ entries=[]; refreshAll(); }
+
+/* ══════════ KEYBOARD ══════════ */
 document.addEventListener('keydown',(e)=>{
-  const dev=document.getElementById('dev-overlay');
-  if(dev&&dev.classList.contains('show')){
+  const ov=document.getElementById('dev-overlay');
+  if(ov&&ov.classList.contains('show')){
     if(e.key==='Escape') closeDev();
-    if(e.key==='Enter'&&document.activeElement&&document.activeElement.id==='dev-code'){ e.preventDefault(); unlockDev(); }
+    if(e.key==='Enter'){ e.preventDefault(); unlockDev(); }
     return;
   }
+  if(devEdit&&e.key==='Escape'){ exitDevEdit(); return; }
+  if(devEdit) return;
   if(!document.getElementById('dash').classList.contains('active')) return;
+  if(activeTab!=='log') return;
   const tag=document.activeElement.tagName;
   if(tag==='TEXTAREA'||tag==='INPUT') return;
-  if(e.key>='1'&&e.key<='9'){ setPeople(Number(e.key)); }
-  if(e.key==='Enter' && !e.repeat){ logEntry(); }
+  if(e.key>='1'&&e.key<='9') setPeople(Number(e.key));
+  if(e.key==='Enter'&&!e.repeat) logEntry();
 });
 
-/* ── feature detection ── */
+/* ══════════ BOOT ══════════ */
 if(!FS_SUPPORTED){
   document.getElementById('fs-supported-block').classList.add('hidden');
   document.getElementById('fs-unsupported-block').classList.remove('hidden');
 }
-
-/* ── boot ── */
-renderChipRows();
-resetForm();
+ensureBlockCfg(); applyLayout(); renderChipRows(); resetForm();
 maybeShowRestore();
 </script>
 </body>
